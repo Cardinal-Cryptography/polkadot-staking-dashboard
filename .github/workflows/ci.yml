@@ -3,10 +3,10 @@ name: Staking Dashboard CI
 on:
   push:
     branches: 
-      - main
+      - master
       - A0-1615-build-and-push
   pull_request:
-    branches: [main]
+    branches: [master]
 
 jobs:
   check-license-lines:
