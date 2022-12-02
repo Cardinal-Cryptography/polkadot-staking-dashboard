@@ -2,9 +2,7 @@ name: Staking Dashboard CI
 
 on:
   push:
-    branches: 
-      - master
-      - A0-1615-build-and-push
+    branches: [master]
   pull_request:
     branches: [master]
 

@@ -2,9 +2,7 @@ name: Build and push staking dashboard to ECR
 
 on:
   push:
-    branches:
-      - master
-      - A0-1615-build-and-push
+    branches: [ master ]
 
 jobs:
   build-push-docker:
