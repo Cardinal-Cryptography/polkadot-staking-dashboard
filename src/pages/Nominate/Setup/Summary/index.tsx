@@ -54,7 +54,7 @@ export const Summary = (props: SetupStepProps) => {
 
     // construct a batch of transactions
     const txs = [
-      api.tx.staking.bond(stashToSubmit, bondToSubmit, payee),
+      api.tx.staking.bond(stashToSubmit, bondToSubmit.toString(), payee),
       api.tx.staking.nominate(targetsToSubmit),
       api.tx.staking.setController(controllerToSubmit),
     ];
