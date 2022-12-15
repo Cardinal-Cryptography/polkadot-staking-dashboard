@@ -11,7 +11,7 @@ export const UriPrefix = '/';
 export const TitleDefault = 'Aleph Zero Staking Dashboard';
 export const DappName = 'Aleph Zero Staking Dashboard';
 export const PolkadotUrl = 'https://alephzero.org/staking/';
-export const DefaultNetwork = 'alephzerotestnet';
+export const DefaultNetwork = 'alephzero';
 
 /*
  * Data Structure Helpers
@@ -65,8 +65,8 @@ export const FallbackExpectedBlockTime = 1000;
 /*
  * Misc values
  */
-export const ListItemsPerPage = 50;
-export const ListItemsPerBatch = 30;
+export const ListItemsPerPage = 30;
+export const ListItemsPerBatch = 15;
 export const MinBondPrecision = 3;
 export const MaxPayoutDays = 60;
 

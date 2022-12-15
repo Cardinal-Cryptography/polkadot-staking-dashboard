@@ -128,7 +128,7 @@ export const DefinitionWrapper = styled(motion.div)`
   width: 100%;
   display: flex;
   background: ${helpButton};
-  border-radius: 1.5rem;
+  border-radius: 0.1rem;
   margin-bottom: 1.25rem;
   padding: 1.5rem 1.5rem 0 1.5rem;
   flex-flow: row wrap;

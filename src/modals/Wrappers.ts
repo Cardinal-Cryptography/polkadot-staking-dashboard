@@ -55,7 +55,7 @@ export const HeightWrapper = styled.div<{ size: string }>`
       ? '800px'
       : '600px'};
   max-height: 100%;
-  border-radius: 1.5rem;
+  border-radius: 0.1rem;
   z-index: 9;
   position: relative;
 `;

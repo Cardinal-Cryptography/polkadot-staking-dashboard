@@ -18,11 +18,7 @@ export const ThemesProvider = ({ children }: { children: React.ReactNode }) => {
   // provide default theme if not set
   if (!['light', 'dark'].includes(localTheme)) {
     // check system theme
-    localTheme =
-      window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light';
+    localTheme = 'dark';
     localStorage.setItem('theme', localTheme);
   }
 
@@ -32,19 +28,6 @@ export const ThemesProvider = ({ children }: { children: React.ReactNode }) => {
     card: 'shadow',
   });
   const stateRef = useRef(state);
-
-  // auto change theme on system change
-  window
-    .matchMedia('(prefers-color-scheme: dark)')
-    .addEventListener('change', (event) => {
-      const _theme = event.matches ? 'dark' : 'light';
-      localStorage.setItem('theme', _theme);
-      setStateWithRef(
-        { ...stateRef.current, mode: _theme },
-        setState,
-        stateRef
-      );
-    });
 
   const toggleTheme = (_theme: string | null = null): void => {
     if (_theme === null) {

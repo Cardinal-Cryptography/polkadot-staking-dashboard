@@ -65,6 +65,8 @@ export const SetController = (props: SetupStepProps) => {
     });
   };
 
+  const existentialDepositBaseAsHuman = existentialDepositBase.toFixed(10);
+
   return (
     <>
       <Header
@@ -77,16 +79,18 @@ export const SetController = (props: SetupStepProps) => {
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {items.length === 0 && (
           <Warning
-            text={`${t('nominate.none_of_your')} ${existentialDepositBase} ${
-              network.unit
-            }. ${t('nominate.top_up_account')}`}
+            text={`${t(
+              'nominate.none_of_your'
+            )} ${existentialDepositBaseAsHuman} ${network.unit}. ${t(
+              'nominate.top_up_account'
+            )}`}
           />
         )}
         {itemsWithEnoughBalance === 0 && (
           <Warning
             text={`${t(
               'nominate.select_a_controller'
-            )} ${existentialDepositBase} ${network.unit}.`}
+            )} ${existentialDepositBaseAsHuman} ${network.unit}.`}
           />
         )}
         <Spacer />

@@ -219,8 +219,7 @@
       "active_validator": [
         "Active Validator",
         [
-          "A validator that is actively validating blocks. Rewards are accumulated based on the validator's activity.,'A new set of validators are chosen for each era, so there is no guarantee the same validator will be active in subsequent eras.",
-          "{NETWORK_NAME} allows a nominator to nominate up to 16 validators, maximising your chances of nominating an active validator in each era."
+          "A validator that is part of the era committee. Active validators are validating blocks and receiving rewards for that. A new set of validators are chosen for each era and if a validator just joined they will have to wait 1 era to become an active validator."
         ]
       ],
       "average_commission": [

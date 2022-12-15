@@ -106,7 +106,8 @@ button {
 }
 
 /* Aleph custom styles */
-.btn-layout, button {
+.btn-layout,
+button {
   font-family: 'Gilroy', sans-serif;
   font-weight: 600;
   letter-spacing: 0.04rem;
