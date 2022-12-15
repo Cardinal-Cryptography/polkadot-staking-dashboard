@@ -18,6 +18,7 @@ export interface GenerateNominationsInnerProps {
   setters: Array<any>;
   nominations: string[];
   batchKey: string;
+  stepsSetup?: boolean | null;
 }
 
 export interface HeaderProps {

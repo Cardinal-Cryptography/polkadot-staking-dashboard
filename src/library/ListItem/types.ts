@@ -55,6 +55,7 @@ export interface SelectProps {
   item: {
     address: string;
   };
+  onSelect?: () => void | null;
 }
 
 export interface ParaValidatorProps {

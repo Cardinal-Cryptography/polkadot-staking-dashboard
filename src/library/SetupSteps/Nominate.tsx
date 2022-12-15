@@ -44,6 +44,7 @@ export const Nominate = (props: NominationsProps) => {
             nominations automatically or manually insert them.
           </h4>
           <GenerateNominations
+            stepsSetup
             batchKey={batchKey}
             setters={[
               {

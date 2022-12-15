@@ -28,6 +28,10 @@ export const ListProvider = (props: any) => {
     setSelected([...selected].concat(_item));
   };
 
+  const addAsSingleSelect = (_item: any) => {
+    setSelected([_item]);
+  };
+
   const removeFromSelected = (items: Array<any>) => {
     setSelected([...selected].filter((item) => !items.includes(item)));
   };
@@ -35,6 +39,7 @@ export const ListProvider = (props: any) => {
   const resetSelected = () => {
     setSelected([]);
   };
+
   const setSelectActive = (_selectActive: boolean) => {
     _setSelectActive(_selectActive);
     if (_selectActive === false) {
@@ -53,6 +58,7 @@ export const ListProvider = (props: any) => {
         addToSelected,
         removeFromSelected,
         resetSelected,
+        addAsSingleSelect,
         setListFormat,
         selected,
         selectActive,

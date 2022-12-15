@@ -3,10 +3,8 @@
 
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
-  faChartPie,
-  faCoins,
+  faChevronCircleRight,
   faHeart,
-  faPlus,
   faTimes,
   faUserEdit,
 } from '@fortawesome/free-solid-svg-icons';
@@ -14,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
+import { useStaking } from 'contexts/Staking';
 import { useValidators } from 'contexts/Validators';
 import { LargeItem } from 'library/Filter/LargeItem';
 import { SelectableWrapper } from 'library/List';
@@ -31,27 +30,21 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
   // functional props
   const setters = props.setters ?? [];
   const defaultNominations = props.nominations;
-  const { batchKey } = props;
+  const { batchKey, stepsSetup } = props;
 
   const { openModalWith } = useModal();
-  const { isReady, consts } = useApi();
+  const { isReady } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { setTargets } = useStaking();
   const { removeValidatorMetaBatch, validators, meta } = useValidators();
-  const {
-    fetch: fetchFromMethod,
-    add: addNomination,
-    available: availableToNominate,
-  } = useFetchMehods();
-  const { maxNominations } = consts;
+  const { fetch: fetchFromMethod } = useFetchMehods();
 
   let { favoritesList } = useValidators();
   if (favoritesList === null) {
     favoritesList = [];
   }
   // store the method of fetching validators
-  const [method, setMethod] = useState<string | null>(
-    defaultNominations.length ? 'Manual' : null
-  );
+  const [method, setMethod] = useState<string | null>(null);
 
   // store whether validators are being fetched
   const [fetching, setFetching] = useState<boolean>(false);
@@ -114,17 +107,6 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
       // update component state
       setNominations([..._nominations]);
       setFetching(false);
-      updateSetters(_nominations);
-    }
-  };
-
-  // add nominations based on method
-  const addNominationByType = (type: string) => {
-    if (method) {
-      const _nominations = addNomination(nominations, type);
-      removeValidatorMetaBatch(batchKey);
-      setNominations([..._nominations]);
-      updateSetters([..._nominations]);
     }
   };
 
@@ -147,25 +129,6 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
     }
   };
 
-  // callback function for adding nominations
-  const cbAddNominations = ({ setSelectActive }: any) => {
-    setSelectActive(false);
-
-    const updateList = (_nominations: Nominations) => {
-      removeValidatorMetaBatch(batchKey);
-      setNominations([..._nominations]);
-      updateSetters(_nominations);
-    };
-    openModalWith(
-      'SelectFavorites',
-      {
-        nominations,
-        callback: updateList,
-      },
-      'xl'
-    );
-  };
-
   // function for clearing nomination list
   const clearNominations = () => {
     setMethod(null);
@@ -174,48 +137,14 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
     updateSetters([]);
   };
 
-  // callback function for removing selected validators
-  const cbRemoveSelected = ({
-    selected,
-    resetSelected,
-    setSelectActive,
-  }: any) => {
-    removeValidatorMetaBatch(batchKey);
-    const _nominations = [...nominations].filter((n: any) => {
-      return !selected.map((_s: any) => _s.address).includes(n.address);
-    });
-    setNominations([..._nominations]);
-    updateSetters([..._nominations]);
-    setSelectActive(false);
-    resetSelected();
-  };
-
-  const disabledMaxNominations = () => {
-    return nominations.length >= maxNominations;
-  };
-  const disabledAddFavorites = () => {
-    return !favoritesList?.length || nominations.length >= maxNominations;
-  };
-
   // accumulate generation methods
   const methods = [
     {
-      title: 'Optimal Selection',
-      subtitle: 'Selects a mix of majority active and inactive validators.',
-      icon: faChartPie as IconProp,
+      title: 'Display All',
+      subtitle: 'List all validators.',
+      icon: faUserEdit as IconProp,
       onClick: () => {
-        setMethod('Optimal Selection');
-        removeValidatorMetaBatch(batchKey);
-        setNominations([]);
-        setFetching(true);
-      },
-    },
-    {
-      title: 'Active Low Commission',
-      subtitle: 'Gets a set of active validators with low commission.',
-      icon: faCoins as IconProp,
-      onClick: () => {
-        setMethod('Active Low Commission');
+        setMethod('Display All');
         removeValidatorMetaBatch(batchKey);
         setNominations([]);
         setFetching(true);
@@ -223,7 +152,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
     },
     {
       title: 'From Favorites',
-      subtitle: 'Gets a set of your favorite validators.',
+      subtitle: 'Choose one of your favorite validators.',
       icon: faHeart as IconProp,
       onClick: () => {
         setMethod('From Favorites');
@@ -232,60 +161,26 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
         setFetching(true);
       },
     },
-    {
-      title: 'Manual Selection',
-      subtitle: 'Add validators from scratch.',
-      icon: faUserEdit as IconProp,
-      onClick: () => {
-        setMethod('Manual');
-        removeValidatorMetaBatch(batchKey);
-        setNominations([]);
-      },
-    },
   ];
 
-  // accumulate actions
-  const actions = [
-    {
-      title: 'Add From Favorites',
-      onClick: cbAddNominations,
-      onSelected: false,
-      isDisabled: disabledAddFavorites,
+  const defaultFilters = {
+    includes: ['active'],
+    excludes: ['all_commission', 'blocked_nominations', 'missing_identity'],
+  };
+
+  const validatorAction = {
+    text: 'Nominate',
+    iconLeft: faChevronCircleRight as IconProp,
+    onClick: (validator: any) => {
+      setTargets({ nominations: [validator] });
+      openModalWith('Nominate', {}, 'small');
     },
-    {
-      title: `Remove Selected`,
-      onClick: cbRemoveSelected,
-      onSelected: true,
-      isDisabled: () => false,
-    },
-    {
-      title: 'Parachain Validator',
-      onClick: () => addNominationByType('Parachain Validator'),
-      onSelected: false,
-      icon: faPlus,
-      isDisabled: () =>
-        disabledMaxNominations() ||
-        !availableToNominate(nominations).parachainValidators.length,
-    },
-    {
-      title: 'Active Validator',
-      onClick: () => addNominationByType('Active Validator'),
-      onSelected: false,
-      icon: faPlus,
-      isDisabled: () =>
-        disabledMaxNominations() ||
-        !availableToNominate(nominations).activeValidators.length,
-    },
-    {
-      title: 'Random Validator',
-      onClick: () => addNominationByType('Random Validator'),
-      onSelected: false,
-      icon: faPlus,
-      isDisabled: () =>
-        disabledMaxNominations() ||
-        !availableToNominate(nominations).randomValidators.length,
-    },
-  ];
+  };
+
+  const validatorOnSelectAction = (validator: any) => {
+    setTargets({ nominations: [validator] });
+    updateSetters([validator]);
+  };
 
   return (
     <>
@@ -355,9 +250,16 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
                   bondType="stake"
                   validators={nominations}
                   batchKey={batchKey}
-                  selectable
-                  actions={actions}
+                  defaultFilters={defaultFilters}
+                  validatorAction={!stepsSetup && validatorAction}
+                  validatorOnSelectAction={validatorOnSelectAction}
                   allowMoreCols
+                  allowFilters
+                  allowSearch
+                  pagination
+                  selectable={stepsSetup}
+                  selectActive={stepsSetup}
+                  selectToggleable={false}
                   allowListFormat={false}
                 />
               </div>

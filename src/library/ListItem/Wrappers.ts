@@ -58,9 +58,6 @@ export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
       &.status {
         height: 2.75rem;
       }
-      svg {
-        margin: 0;
-      }
     }
   }
 `;
@@ -222,6 +219,42 @@ export const SelectWrapper = styled.button`
   width: 1.1rem;
   height: 1.1rem;
   padding: 0;
+  * {
+    cursor: pointer;
+    width: 100%;
+    padding: 0;
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
+  .select-checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+  }
+`;
+
+export const SelectSingleWrapper = styled.button`
+  background: ${modalBackground};
+  margin: 0 0.75rem 0 0.25rem;
+  overflow: hidden;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  width: 1.1rem;
+  height: 1.1rem;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid ${borderPrimary};
+
   * {
     cursor: pointer;
     width: 100%;

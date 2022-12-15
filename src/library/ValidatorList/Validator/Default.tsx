@@ -5,6 +5,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faBars, faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { useMenu } from 'contexts/Menu';
 import { useModal } from 'contexts/Modal';
 import { useNotifications } from 'contexts/Notifications';
@@ -26,7 +27,7 @@ import { EraStatus } from '../../ListItem/Labels/EraStatus';
 import { FavoriteValidator } from '../../ListItem/Labels/FavoriteValidator';
 import { Identity } from '../../ListItem/Labels/Identity';
 import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
-import { Select } from '../../ListItem/Labels/Select';
+import { SelectSingle } from '../../ListItem/Labels/Select';
 import { DefaultProps } from './types';
 import { getIdentityDisplay } from './Utils';
 
@@ -38,6 +39,8 @@ export const Default = (props: DefaultProps) => {
     batchKey,
     showMenu,
     inModal,
+    validatorAction,
+    validatorOnSelectAction,
   } = props;
 
   const { openModalWith } = useModal();
@@ -109,13 +112,24 @@ export const Default = (props: DefaultProps) => {
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row">
-          {selectActive && <Select item={validator} />}
+          {selectActive && (
+            <SelectSingle
+              item={validator}
+              onSelect={() => validatorOnSelectAction(validator)}
+            />
+          )}
           <Identity
             meta={meta}
             address={address}
             batchIndex={batchIndex}
             batchKey={batchKey}
           />
+          {validatorAction && (
+            <ButtonPrimary
+              {...validatorAction}
+              onClick={() => validatorAction.onClick(validator)}
+            />
+          )}
           <div>
             <Labels>
               <Oversubscribed batchIndex={batchIndex} batchKey={batchKey} />

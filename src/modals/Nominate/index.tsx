@@ -10,9 +10,11 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useTxFees } from 'contexts/TxFees';
+import { useValidators } from 'contexts/Validators';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { Identity } from 'library/ListItem/Labels/Identity';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useState } from 'react';
 import { planckBnToUnit } from 'Utils';
@@ -36,6 +38,10 @@ export const Nominate = () => {
   const { nominations } = targets;
   const ledger = getLedgerForStash(activeAccount);
   const { active } = ledger;
+  const { meta } = useValidators();
+
+  const batchKey = 'generate_nominations_active';
+  const addresses = meta[batchKey]?.addresses ?? [];
 
   const activeBase = planckBnToUnit(active, units);
   const minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
@@ -89,6 +95,9 @@ export const Nominate = () => {
     );
   }
 
+  const nomination = nominations.length ? nominations[0] : null;
+  const batchIndex = addresses.indexOf(nomination.address);
+
   return (
     <>
       <Title title="Nominate" icon={faPlayCircle} />
@@ -97,10 +106,13 @@ export const Nominate = () => {
           {warnings.map((text: any, index: number) => (
             <Warning key={index} text={text} />
           ))}
-          <h2>
-            You Have {nominations.length} Nomination
-            {nominations.length === 1 ? '' : 's'}
-          </h2>
+          <h2>You intend to nominate:</h2>
+          <Identity
+            meta={meta}
+            address={nomination.address}
+            batchKey={batchKey}
+            batchIndex={batchIndex}
+          />
           <Separator />
           <NotesWrapper>
             <p>

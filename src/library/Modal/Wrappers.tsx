@@ -63,6 +63,14 @@ export const StatsWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
 `;
+
+export const ValidatorMetricsStatsWrapper = styled.div`
+  margin-bottom: 2rem;
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+`;
+
 export const StatWrapper = styled.div`
   display: flex;
   flex-flow: column wrap;

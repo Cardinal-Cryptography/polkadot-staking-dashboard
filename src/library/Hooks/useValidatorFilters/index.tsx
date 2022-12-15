@@ -3,11 +3,14 @@
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useApi } from 'contexts/Api';
+import { useStaking } from 'contexts/Staking';
 import { useValidators } from 'contexts/Validators';
 import { AnyFunction, AnyJson } from 'types';
 
 export const useValidatorFilters = () => {
   const { consts } = useApi();
+  const { eraStakers, erasStakersSyncing } = useStaking();
+  const { stakers } = eraStakers;
   const { meta, session, sessionParachain } = useValidators();
   const { maxNominatorRewardedPerValidator } = consts;
 
@@ -112,9 +115,10 @@ export const useValidatorFilters = () => {
    */
   const filterActive = (list: any) => {
     // if list has not yet been populated, return original list
-    if (session.list.length === 0) return list;
-    return list.filter((validator: any) =>
-      session.list.includes(validator.address)
+    if (erasStakersSyncing) return list;
+    return list.filter(
+      (validator: any) =>
+        stakers.find((s: any) => s.address === validator.address) !== undefined
     );
   };
 

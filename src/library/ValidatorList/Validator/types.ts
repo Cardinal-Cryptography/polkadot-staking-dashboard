@@ -20,4 +20,6 @@ export interface DefaultProps {
   batchKey: string;
   showMenu: boolean;
   inModal: boolean;
+  validatorAction: any;
+  validatorOnSelectAction: (validator: any) => void;
 }
