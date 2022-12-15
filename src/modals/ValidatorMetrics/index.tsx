@@ -4,20 +4,15 @@
 import { BN } from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
-import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
-import { useSubscan } from 'contexts/Subscan';
-import { EraPoints as EraPointsGraph } from 'library/Graphs/EraPoints';
-import { formatSize, useSize } from 'library/Graphs/Utils';
-import { GraphWrapper } from 'library/Graphs/Wrappers';
 import Identicon from 'library/Identicon';
 import { Title } from 'library/Modal/Title';
-import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
+import {
+  StatWrapper,
+  ValidatorMetricsStatsWrapper,
+} from 'library/Modal/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
-import { StatusLabel } from 'library/StatusLabel';
-import { SubscanButton } from 'library/SubscanButton';
 import { PaddingWrapper } from 'modals/Wrappers';
-import React, { useEffect, useState } from 'react';
 import { clipAddress, humanNumber, planckBnToUnit, rmCommas } from 'Utils';
 
 export const ValidatorMetrics = () => {
@@ -26,8 +21,6 @@ export const ValidatorMetrics = () => {
   } = useApi();
   const { config } = useModal();
   const { address, identity } = config;
-  const { fetchEraPoints }: any = useSubscan();
-  const { metrics } = useNetworkMetrics();
   const { eraStakers } = useStaking();
   const { stakers } = eraStakers;
 
@@ -47,20 +40,6 @@ export const ValidatorMetrics = () => {
       ownStake = new BN(rmCommas(own));
     }
   }
-  const [list, setList] = useState([]);
-
-  const ref: any = React.useRef();
-  const size = useSize(ref.current);
-  const { width, height, minHeight } = formatSize(size, 300);
-
-  const handleEraPoints = async () => {
-    const _list = await fetchEraPoints(address, metrics.activeEra.index);
-    setList(_list);
-  };
-
-  useEffect(() => {
-    handleEraPoints();
-  }, []);
 
   const stats = [
     {
@@ -86,7 +65,7 @@ export const ValidatorMetrics = () => {
       </div>
 
       <PaddingWrapper horizontalOnly>
-        <StatsWrapper>
+        <ValidatorMetricsStatsWrapper>
           {stats.map(
             (s: { label: string; value: string; help: string }, i: number) => (
               <StatWrapper key={`metrics_stat_${i}`}>
@@ -99,45 +78,8 @@ export const ValidatorMetrics = () => {
               </StatWrapper>
             )
           )}
-        </StatsWrapper>
+        </ValidatorMetricsStatsWrapper>
       </PaddingWrapper>
-      <div
-        className="body"
-        style={{ position: 'relative', marginTop: '0.5rem' }}
-      >
-        <SubscanButton />
-        <GraphWrapper
-          style={{
-            margin: '0 1.5rem 0 0.5rem',
-            height: 350,
-            border: 'none',
-            boxShadow: 'none',
-          }}
-          flex
-        >
-          <h4>
-            Recent Era Points <OpenHelpIcon helpKey="Era Points" />
-          </h4>
-          <div className="inner" ref={ref} style={{ minHeight }}>
-            <StatusLabel
-              status="active_service"
-              statusFor="subscan"
-              title="Subscan Disabled"
-            />
-            <div
-              className="graph"
-              style={{
-                height: `${height}px`,
-                width: `${width}px`,
-                position: 'absolute',
-                left: '-1rem',
-              }}
-            >
-              <EraPointsGraph items={list} height={250} />
-            </div>
-          </div>
-        </GraphWrapper>
-      </div>
     </>
   );
 };
