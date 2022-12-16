@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { BN } from '@polkadot/util';
 import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -44,7 +43,7 @@ export const ClosurePrompts = () => {
     memberCounter === '1';
 
   // depositor needs to unbond funds
-  const depositorCanUnbond = !active.gt(new BN('0')) && !targets.length;
+  const depositorCanUnbond = !active.isZero() && !targets.length;
 
   // depositor can withdraw & close pool
   const depositorCanWithdraw =
