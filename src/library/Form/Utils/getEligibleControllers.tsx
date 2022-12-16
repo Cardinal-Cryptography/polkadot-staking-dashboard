@@ -60,7 +60,8 @@ export const getEligibleControllers = (): Array<InputItem> => {
     _accountsAsInput = _accountsAsInput.sort((a: InputItem, b: InputItem) => {
       const aFree = a?.balance?.free ?? new BN(0);
       const bFree = b?.balance?.free ?? new BN(0);
-      return bFree.sub(aFree).toNumber();
+
+      return aFree.gt(bFree) ? -1 : aFree.eq(bFree) ? 0 : 1;
     });
 
     return _accountsAsInput;
