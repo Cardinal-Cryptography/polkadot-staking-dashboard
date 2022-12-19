@@ -42,6 +42,7 @@ export const useValidatorFilters = () => {
       // push validator if sync has not completed
       if (!identities.length || !supers.length) {
         filteredList.push(validator);
+        continue;
       }
 
       const identityExists = identities[addressBatchIndex] ?? null;

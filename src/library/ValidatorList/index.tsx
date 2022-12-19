@@ -32,7 +32,7 @@ export const ValidatorListInner = (props: any) => {
   const { isReady, network } = useApi();
   const { activeAccount } = useConnect();
   const { metrics } = useNetworkMetrics();
-  const { fetchValidatorMetaBatch } = useValidators();
+  const { fetchValidatorMetaBatch, meta } = useValidators();
   const provider = useList();
   const modal = useModal();
   const { isSyncing } = useUi();
@@ -195,7 +195,14 @@ export const ValidatorListInner = (props: any) => {
     if (allowFilters && fetched) {
       handleValidatorsFilterUpdate();
     }
-  }, [order, isSyncing, includes?.length, excludes?.length]);
+  }, [
+    order,
+    isSyncing,
+    includes?.length,
+    excludes?.length,
+    meta[batchKey]?.supers,
+    meta[batchKey]?.identities,
+  ]);
 
   // handle modal resize on list format change
   useEffect(() => {
