@@ -74,7 +74,7 @@ export const Wrapper = styled.div`
         }
         h5 {
           opacity: 1;
-          color: white;
+          color: #111b24;
         }
         .bar {
           background: ${networkColor};

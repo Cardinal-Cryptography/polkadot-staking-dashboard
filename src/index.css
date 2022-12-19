@@ -148,3 +148,7 @@ button {
 .theme-aleph-zero-testnet .connect > span {
   color: #111b24;
 }
+
+button.btn-submit {
+    color: inherit;
+}
