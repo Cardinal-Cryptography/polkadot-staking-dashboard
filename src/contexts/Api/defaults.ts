@@ -37,5 +37,9 @@ export const defaultApiContext: APIContextInterface = {
   isLightClient: false,
   isReady: false,
   status: ConnectionStatus.Disconnected,
-  network: NETWORKS.alephzero,
+  network:
+    process.env.NODE_ENV === 'production' &&
+    process.env.REACT_APP_DISABLE_MAINNET !== '1'
+      ? NETWORKS.alephzero
+      : NETWORKS.alephzerotestnet,
 };

@@ -40,8 +40,13 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   const [api, setApi] = useState<ApiPromise | null>(null);
 
   // network state
+  const defaultNetworkName =
+    process.env.NODE_ENV === 'production' &&
+    process.env.REACT_APP_DISABLE_MAINNET !== '1'
+      ? NetworkName.AlephZero
+      : NetworkName.AlephZeroTestnet;
   const _name: NetworkName =
-    (localStorage.getItem('network') as NetworkName) ?? NetworkName.AlephZero;
+    (localStorage.getItem('network') as NetworkName) ?? defaultNetworkName;
 
   const [network, setNetwork] = useState<NetworkState>({
     name: _name,

@@ -11,8 +11,10 @@ import { Networks } from 'types';
 /*
  * Network Configuration
  */
-export const NETWORKS: Networks = {
-  alephzero: {
+export const NETWORKS: Networks = {};
+
+if (process.env.REACT_APP_DISABLE_MAINNET !== '1') {
+  NETWORKS.alephzero = {
     name: 'Aleph Zero',
     endpoints: {
       rpc: 'wss://ws.azero.dev',
@@ -60,55 +62,56 @@ export const NETWORKS: Networks = {
       stakeTarget: 0.5,
       yearlyInflationInTokens: BN_MILLION.mul(new BN(30)).toNumber(),
     },
+  };
+}
+
+NETWORKS.alephzerotestnet = {
+  name: 'Aleph Zero Testnet',
+  endpoints: {
+    rpc: 'wss://ws.test.azero.dev',
+    lightClient: null,
   },
-  alephzerotestnet: {
-    name: 'Aleph Zero Testnet',
-    endpoints: {
-      rpc: 'wss://ws.test.azero.dev',
-      lightClient: null,
+  colors: {
+    primary: {
+      light: '#00eac7',
+      dark: '#00eac7',
     },
-    colors: {
-      primary: {
-        light: '#00eac7',
-        dark: '#00eac7',
-      },
-      secondary: {
-        light: '#00eac7',
-        dark: '#00eac7',
-      },
-      stroke: {
-        light: '#00eac7',
-        dark: '#00eac7',
-      },
-      transparent: {
-        light: 'rgba(0, 204, 171, .5)',
-        dark: 'rgba(0, 204, 171, .5)',
-      },
+    secondary: {
+      light: '#00eac7',
+      dark: '#00eac7',
     },
-    subscanEndpoint: 'https://alephzero.api.subscan.io',
+    stroke: {
+      light: '#00eac7',
+      dark: '#00eac7',
+    },
+    transparent: {
+      light: 'rgba(0, 204, 171, .5)',
+      dark: 'rgba(0, 204, 171, .5)',
+    },
+  },
+  subscanEndpoint: 'https://alephzero.api.subscan.io',
+  unit: 'TZERO',
+  units: 12,
+  ss58: 42,
+  brand: {
+    icon: AzeroIconSVG,
+    logo: {
+      svg: AzeroLogoSVG,
+      width: '8.5rem',
+    },
+    inline: {
+      svg: AzeroInlineSVG,
+      size: '1.2rem',
+    },
+  },
+  api: {
     unit: 'TZERO',
-    units: 12,
-    ss58: 42,
-    brand: {
-      icon: AzeroIconSVG,
-      logo: {
-        svg: AzeroLogoSVG,
-        width: '8.5rem',
-      },
-      inline: {
-        svg: AzeroInlineSVG,
-        size: '1.2rem',
-      },
-    },
-    api: {
-      unit: 'TZERO',
-      priceTicker: 'DOTUSDT', // this is for compatibility with binance endpoint, it's pinged for current token value, but we don't display that value
-    },
-    params: {
-      ...DefaultParams,
-      stakeTarget: 0.5,
-      yearlyInflationInTokens: BN_MILLION.mul(new BN(30)).toNumber(),
-    },
+    priceTicker: 'DOTUSDT', // this is for compatibility with binance endpoint, it's pinged for current token value, but we don't display that value
+  },
+  params: {
+    ...DefaultParams,
+    stakeTarget: 0.5,
+    yearlyInflationInTokens: BN_MILLION.mul(new BN(30)).toNumber(),
   },
 };
 
