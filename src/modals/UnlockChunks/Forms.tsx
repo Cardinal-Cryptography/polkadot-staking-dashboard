@@ -47,12 +47,12 @@ export const Forms = forwardRef(
 
     // valid to submit transaction
     const [valid, setValid] = useState<boolean>(
-      unlock?.value?.toNumber() > 0 ?? false
+      unlock?.value?.gt(new BN('0')) ?? false
     );
 
     // ensure unlock value is valid
     useEffect(() => {
-      setValid(unlock?.value?.toNumber() > 0 ?? false);
+      setValid(unlock?.value?.gt(new BN('0')) ?? false);
     }, [unlock]);
 
     // tx to submit
@@ -63,7 +63,7 @@ export const Forms = forwardRef(
       }
       // rebond is only available when staking directly.
       if (task === 'rebond' && isStaking) {
-        tx = api.tx.staking.rebond(unlock.value.toNumber());
+        tx = api.tx.staking.rebond(unlock.value.toString());
       } else if (task === 'withdraw' && isStaking) {
         tx = api.tx.staking.withdrawUnbonded(historyDepth);
       } else if (task === 'withdraw' && isPooling && selectedActivePool) {
