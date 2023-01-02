@@ -11,7 +11,11 @@ export const UriPrefix = '/';
 export const TitleDefault = 'Aleph Zero Staking Dashboard';
 export const DappName = 'Aleph Zero Staking Dashboard';
 export const PolkadotUrl = 'https://alephzero.org/staking/';
-export const DefaultNetwork = 'alephzero';
+export const DefaultNetwork =
+  process.env.NODE_ENV === 'production' &&
+  process.env.REACT_APP_DISABLE_MAINNET !== '1'
+    ? 'alephzero'
+    : 'alephzerotestnet';
 
 /*
  * Data Structure Helpers
