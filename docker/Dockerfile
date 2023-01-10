@@ -1,14 +1,7 @@
-FROM ubuntu:22.04 as builder
+FROM node:18-alpine as builder
 
 # Install any needed packages
-RUN apt-get update && \
-  apt-get install --no-install-recommends -y curl git gnupg ca-certificates
-
-# install nodejs
-RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
-RUN apt-get install --no-install-recommends -y nodejs build-essential && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/*
+RUN apk add curl git gnupg ca-certificates
 
 WORKDIR /apps
 COPY . .
