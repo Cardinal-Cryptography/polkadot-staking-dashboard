@@ -16,13 +16,13 @@ jobs:
         envs:
           BUILD_ENVS: REACT_APP_DISABLE_MAINNET=1 REACT_APP_DISABLE_FIAT=1
         run: |
-          docker build --tag staking-dashboard-testnet --build-arg BULD_ENVS=${{ env.BUILD_ENVS }} -f ./docker/Dockerfile .
+          docker build --tag staking-dashboard-testnet --build-arg BUILD_ENVS=${{ env.BUILD_ENVS }} -f ./docker/Dockerfile .
 
       - name: MAINNET | Build docker image
         envs:
           BUILD_ENVS: NODE_ENV=production REACT_APP_DISABLE_FIAT=1
         run: |
-          docker build --tag staking-dashboard-mainnet --build-arg BULD_ENVS=${{ env.BUILD_ENVS }} -f ./docker/Dockerfile .
+          docker build --tag staking-dashboard-mainnet --build-arg BUILD_ENVS=${{ env.BUILD_ENVS }} -f ./docker/Dockerfile .
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
