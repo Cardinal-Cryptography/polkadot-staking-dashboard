@@ -87,7 +87,7 @@ export const Overview = forwardRef(
           </StatWrapper>
         </StatsWrapper>
 
-        {withdrawAvailable.toNumber() > 0 && (
+        {withdrawAvailable.gt(new BN('0')) && (
           <div style={{ margin: '1rem 0 0.5rem 0' }}>
             <ButtonSubmit
               text="Withdraw Unlocked"
