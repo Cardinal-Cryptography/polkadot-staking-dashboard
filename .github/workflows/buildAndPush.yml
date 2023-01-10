@@ -12,9 +12,17 @@ jobs:
       - name: Checkout Source code
         uses: actions/checkout@v2
 
-      - name: Build docker image
+      - name: TESTNET | Build docker image
+        envs:
+          BULD_ENVS: REACT_APP_DISABLE_MAINNET=1 REACT_APP_DISABLE_FIAT=1
         run: |
-          docker build --tag staking-dashboard -f ./docker/Dockerfile .
+          docker build --tag staking-dashboard-testnet --build-arg BULD_ENVS=${{ env.IMAGE_TAG }} -f ./docker/Dockerfile .
+
+      - name: MAINNET | Build docker image
+        envs:
+          BULD_ENVS: NODE_ENV=production REACT_APP_DISABLE_FIAT=1
+        run: |
+          docker build --tag staking-dashboard-mainnet --build-arg BULD_ENVS=${{ env.IMAGE_TAG }} -f ./docker/Dockerfile .
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -30,13 +38,22 @@ jobs:
           username: ${{ secrets.AWS_MAINNET_ACCESS_KEY_ID }}
           password: ${{ secrets.AWS_MAINNET_SECRET_ACCESS_KEY }}
 
-      - name: Push image to ECR
+      - name: TESTNET | Push image to ECR
         env:
-          LOCAL_IMAGE: staking-dashboard
+          LOCAL_IMAGE: staking-dashboard-testnet
           IMAGE_TAG: $(git rev-parse --short HEAD)
           ECR_PUSH_IMAGE: public.ecr.aws/p6e8q1z1/staking-dashboard
         run: |
-          docker tag ${{ env.LOCAL_IMAGE }} ${{ env.ECR_PUSH_IMAGE }}:${{ env.IMAGE_TAG }}
+          docker tag ${{ env.LOCAL_IMAGE }} ${{ env.ECR_PUSH_IMAGE }}:${{ env.IMAGE_TAG }}-testnet
+          docker push ${{ env.ECR_PUSH_IMAGE }}:${{ env.IMAGE_TAG }}
+
+      - name: MAINNET | Push image to ECR
+        env:
+          LOCAL_IMAGE: staking-dashboard-mainnet
+          IMAGE_TAG: $(git rev-parse --short HEAD)
+          ECR_PUSH_IMAGE: public.ecr.aws/p6e8q1z1/staking-dashboard
+        run: |
+          docker tag ${{ env.LOCAL_IMAGE }} ${{ env.ECR_PUSH_IMAGE }}:${{ env.IMAGE_TAG }}-mainnet
           docker tag ${{ env.LOCAL_IMAGE }} ${{ env.ECR_PUSH_IMAGE }}:latest
           docker push ${{ env.ECR_PUSH_IMAGE }}:${{ env.IMAGE_TAG }}
           docker push ${{ env.ECR_PUSH_IMAGE }}:latest

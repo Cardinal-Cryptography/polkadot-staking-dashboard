@@ -1,5 +1,7 @@
 FROM node:18-alpine as builder
 
+ARG BUILD_ENVS
+
 # Install any needed packages
 RUN apk add curl git gnupg ca-certificates
 
@@ -7,7 +9,7 @@ WORKDIR /apps
 COPY . .
 
 RUN npm install --legacy-peer-deps
-RUN NODE_ENV=production REACT_APP_DISABLE_FIAT=1 npm run build
+RUN export $BUILD_ENVS && npm run build
 
 # ===========================================================
 FROM nginx:stable-alpine
