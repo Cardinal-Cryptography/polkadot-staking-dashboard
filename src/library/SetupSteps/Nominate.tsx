@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
 import { Footer } from 'library/SetupSteps/Footer';
@@ -13,11 +12,9 @@ import { NominationsProps } from './types';
 export const Nominate = (props: NominationsProps) => {
   const { batchKey, setupType, section } = props;
 
-  const { consts } = useApi();
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
   const setup = getSetupProgress(setupType, activeAccount);
-  const { maxNominations } = consts;
 
   const setterFn = () => {
     return getSetupProgress(setupType, activeAccount);
