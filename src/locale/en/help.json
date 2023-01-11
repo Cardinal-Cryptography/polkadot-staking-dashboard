@@ -263,7 +263,7 @@
       "commission": [
         "Commission",
         [
-          "Validators can take a percentage of the rewards they earn. This chunk is called their commission.",
+          "Validators can take a percentage of the rewards nominators earn. This chunk is called their commission.",
           "Nominating validators with low commissions mean you will receive a larger share of the rewards they generate.",
           "Some validators might have a commission rate of 100%, meaning you will receive no rewards by nominating these validators.",
           "Examples of such validators include those operating on behalf of exchanges, where nominating and reward distribution is done centrally on the exchange in question.",
@@ -286,8 +286,7 @@
         "Payout",
         [
           "Payouts are staking rewards on {NETWORK_NAME}. They depend on how many 'Era Points' your nominated validator accrued over time. Rewards are determined at the end of every Era (24 hour periods).",
-          "To receive staking rewards, a Payout needs to be requested. Any nominator backing the validator in question can request a Payout.",
-          "One payout request triggers the reward payout for every nominator."
+          "To receive staking rewards, a Payout needs to be requested. Currently the Foundation runs an automated service to make these payouts for all validators, hence you don't need to do that by yourself."
         ]
       ],
       "last_era_payout": [

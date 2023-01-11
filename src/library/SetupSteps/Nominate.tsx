@@ -39,10 +39,7 @@ export const Nominate = (props: NominationsProps) => {
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <div style={{ marginTop: '0.5rem' }}>
-          <h4>
-            Choose up to {maxNominations} validators to nominate. Generate your
-            nominations automatically or manually insert them.
-          </h4>
+          <h4>Choose a validator to nominate.</h4>
           <GenerateNominations
             stepsSetup
             batchKey={batchKey}

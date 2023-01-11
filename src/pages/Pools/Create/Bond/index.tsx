@@ -7,7 +7,6 @@ import { useTxFees } from 'contexts/TxFees';
 import { useUi } from 'contexts/UI';
 import { SetupType } from 'contexts/UI/types';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
-import { CreatePoolStatusBar } from 'library/Form/CreatePoolStatusBar';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
@@ -86,7 +85,6 @@ export const Bond = (props: SetupStepProps) => {
           txFees={txFees}
           maxWidth
         />
-        <CreatePoolStatusBar value={bond.bond} />
         <Footer complete={bondValid} setupType={SetupType.Pool} />
       </MotionContainer>
     </>
