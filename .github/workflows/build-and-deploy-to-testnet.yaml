@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: GIT | Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@master
 
       - name: DOCKER | Build and push testnet image
         uses: ./.github/actions/build-and-push
@@ -28,3 +28,20 @@ jobs:
           aws_mainnet_secret_access_key: ${{ secrets.AWS_MAINNET_SECRET_ACCESS_KEY }}
     outputs:
       image_tag: ${{ steps.build_testnet.outputs.image_tag }}
+  
+  deploy_to_testnet:
+    name: Deploy to testnet
+    runs-on: ubuntu-20.04
+    steps:
+      - name: GIT | Checkout
+        uses: actions/checkout@master
+
+      - name: TESTNET | Deploy staking dashboard
+        uses: ./.github/actions/deploy
+        id: deploy_testnet
+        with:
+          environment: testnet
+          image_tag: ${{ jobs.build_testnet.outputs.image_tag }}
+          aws_access_key_id: ${{ AWS_TESTNET_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_TESTNET_SECRET_ACCESS_KEY }} 
+          github_token: ${{ secrets.CI_GH_TOKEN }}

@@ -1,0 +1,56 @@
+
+name: Deploy docker image
+
+inputs:
+  image_tag:
+    description: Tag of the docker image to be deployed
+    required: true
+    required: true
+  aws_access_key_id:
+    required: true
+  aws_secret_access_key:
+    required: true
+  github_token:
+    required: true
+  environment:
+    type: choice
+    options:
+      - testnet
+      - mainnet
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: GIT | Checkout aleph-apps repo
+      uses: actions/checkout@master
+      with:
+        repository: Cardinal-Cryptography/aleph-apps
+        token: ${{ inputs.github_token }}
+        path: "aleph-apps"
+        ref: A0-1615-staking-dashboard #! change to "main" before merge
+
+    - name: KUSTOMIZE | Init kustomize
+      uses: imranismail/setup-kustomize@v1
+      with:
+        kustomize-version: '3.8.6'
+
+    - name: KUSTOMIZE | Update docker image tag
+      shell: bash
+      env:
+        DEPLOY_IMAGE: public.ecr.aws/p6e8q1z1/staking-dashboard:${{ inputs.image_tag }}-${{ inputs.environment }}
+      run: |
+        cd aleph-apps/staking-dashboard/overlays/${{ inputs.environment }}/eu-central-1
+        kustomize edit set image "staking-dashboard-image-placeholder=${{ env.DEPLOY_IMAGE }}"
+    
+    - name: GIT | Commit changes to aleph-apps repository
+      uses: EndBug/add-and-commit@v5.1.0
+      env:
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+      with:
+        author_name: AlephZero Automation
+        author_email: alephzero@10clouds.com
+        message: 'Updating staking dashboard ${{ inputs.environment }} docker image tag: ${{ inputs.image_tag }}'
+        add: '*.yaml'
+        cwd: 'aleph-apps'
+        branch: A0-1615-staking-dashboard #! Change to "${{ inputs.environment }}" later
