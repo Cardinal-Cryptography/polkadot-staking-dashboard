@@ -12,7 +12,7 @@ on:
 
 jobs:
   build_and_push:
-    name: Build and push Processor
+    name: Build and push
     runs-on: ubuntu-20.04
     steps:
       - name: GIT | Checkout
@@ -20,10 +20,11 @@ jobs:
 
       - name: DOCKER | Build and push testnet image
         uses: ./.github/actions/build-and-push
+        id: build_testnet
         with:
           environment: testnet
           build_envs: "REACT_APP_DISABLE_MAINNET=1 REACT_APP_DISABLE_FIAT=1"
           aws_mainnet_access_key_id: ${{ secrets.AWS_MAINNET_ACCESS_KEY_ID }}
           aws_mainnet_secret_access_key: ${{ secrets.AWS_MAINNET_SECRET_ACCESS_KEY }}
     outputs:
-      image_tag: ${{ steps.build_processor.outputs.image_tag }}
+      image_tag: ${{ steps.build_testnet.outputs.image_tag }}

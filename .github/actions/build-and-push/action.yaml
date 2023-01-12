@@ -49,7 +49,7 @@ runs:
         file: ./docker/Dockerfile
         push: true
         tags: public.ecr.aws/p6e8q1z1/staking-dashboard:${{ steps.get_branch.outputs.sha_short }}-${{ inputs.environment }}
-        build-args: ${{ inputs.build_envs }}
+        build-args: "${{ inputs.build_envs }}"
 
     - name: OUTPUTS | Set outputs with docker images
       id: outputs
