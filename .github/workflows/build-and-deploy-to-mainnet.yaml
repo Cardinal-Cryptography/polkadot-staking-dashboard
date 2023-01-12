@@ -1,0 +1,46 @@
+name: Build, push and deploy staking dashboard to mainnet
+
+on:
+  workflow_dispatch:
+
+  push:
+    paths-ignore:
+      - '*.md'
+    branches:
+      - master
+      - A0-1615-build-pipeline
+
+jobs:
+  build_and_push:
+    name: Build and push
+    runs-on: ubuntu-20.04
+    steps:
+      - name: GIT | Checkout
+        uses: actions/checkout@master
+
+      - name: DOCKER | Build and push mainnet image
+        uses: ./.github/actions/build-and-push
+        id: build_mainnet
+        with:
+          environment: mainnet
+          build_envs: "NODE_ENV=production REACT_APP_DISABLE_FIAT=1"
+          aws_mainnet_access_key_id: ${{ secrets.AWS_MAINNET_ACCESS_KEY_ID }}
+          aws_mainnet_secret_access_key: ${{ secrets.AWS_MAINNET_SECRET_ACCESS_KEY }}
+    outputs:
+      image_tag: ${{ steps.build_mainnet.outputs.image_tag }}
+  
+  deploy_to_mainnet:
+    name: Deploy to mainnet
+    runs-on: ubuntu-20.04
+    needs: [build_and_push]
+    steps:
+      - name: GIT | Checkout
+        uses: actions/checkout@master
+
+      - name: MAINNET | Deploy staking dashboard
+        uses: ./.github/actions/deploy
+        id: deploy_mainnet
+        with:
+          environment: mainnet
+          image_tag: ${{ needs.build_and_push.outputs.image_tag }}
+          github_token: ${{ secrets.CI_GH_TOKEN }}
