@@ -1,0 +1,58 @@
+name: Build and push docker image
+
+inputs:
+  aws_mainnet_access_key_id:
+    required: true
+  aws_mainnet_secret_access_key:
+    required: true
+  environment:
+    description: Testnet or Mainnet
+    required: true
+  build_envs:
+    required: true
+
+outputs:
+  image_tag:
+    description: Tag of the pushed image
+    value: ${{ steps.outputs.outputs.image_tag }}
+
+runs:
+  using: composite
+  steps:
+    - name: GIT | Get branch info & current commit sha
+      id: get_branch
+      shell: bash
+      run: |
+        echo "branch=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
+        echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+    - name: DOCKER | Login to Public Amazon ECR
+      id: login-public-ecr
+      uses: docker/login-action@v2
+      with:
+        registry: public.ecr.aws
+        username: ${{ inputs.aws_mainnet_access_key_id }}
+        password: ${{ inputs.aws_mainnet_secret_access_key }}
+      env:
+        AWS_REGION: us-east-1
+
+    - name: DOCKER | Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@master
+
+    - name: DOCKER | Build and push latest docker image
+      id: build-image
+      uses: docker/build-push-action@v3
+      with:
+        context: .
+        builder: ${{ steps.buildx.outputs.name }}
+        file: ./docker/Dockerfile
+        push: true
+        tags: public.ecr.aws/p6e8q1z1/staking-dashboard:${{ steps.get_branch.outputs.sha_short }}-${{ inputs.environment }}
+        build-args: ${{ inputs.build_envs }}
+
+    - name: OUTPUTS | Set outputs with docker images
+      id: outputs
+      shell: bash
+      run: |
+        echo "image_tag=${{ steps.get_branch.outputs.sha_short }}" >> $GITHUB_OUTPUT
