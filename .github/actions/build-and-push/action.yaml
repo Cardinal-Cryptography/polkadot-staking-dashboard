@@ -5,10 +5,14 @@ inputs:
     required: true
   aws_mainnet_secret_access_key:
     required: true
-  environment:
-    description: Testnet or Mainnet
     required: true
   build_envs:
+    required: true
+  environment:
+    type: choice
+    options:
+      - testnet
+      - mainnet
     required: true
 
 outputs:
