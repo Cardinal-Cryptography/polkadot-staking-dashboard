@@ -32,6 +32,7 @@ jobs:
   deploy_to_testnet:
     name: Deploy to testnet
     runs-on: ubuntu-20.04
+    needs: [build_and_push]
     steps:
       - name: GIT | Checkout
         uses: actions/checkout@master
@@ -41,7 +42,7 @@ jobs:
         id: deploy_testnet
         with:
           environment: testnet
-          image_tag: ${{ jobs.build_testnet.outputs.image_tag }}
-          aws_access_key_id: ${{ AWS_TESTNET_ACCESS_KEY_ID }}
+          image_tag: ${{ jobs.build_and_push.outputs.image_tag }}
+          aws_access_key_id: ${{ secrets.AWS_TESTNET_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_TESTNET_SECRET_ACCESS_KEY }} 
           github_token: ${{ secrets.CI_GH_TOKEN }}
