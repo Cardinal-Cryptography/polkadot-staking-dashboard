@@ -1,13 +1,8 @@
-
 name: Deploy docker image
 
 inputs:
   image_tag:
     description: Tag of the docker image to be deployed
-    required: true
-  aws_access_key_id:
-    required: true
-  aws_secret_access_key:
     required: true
   github_token:
     required: true
@@ -27,7 +22,7 @@ runs:
         repository: Cardinal-Cryptography/aleph-apps
         token: ${{ inputs.github_token }}
         path: "aleph-apps"
-        ref: A0-1615-staking-dashboard #! change to "main" before merge
+        ref: main
 
     - name: KUSTOMIZE | Init kustomize
       uses: imranismail/setup-kustomize@v1
@@ -52,4 +47,4 @@ runs:
         message: 'Updating staking dashboard ${{ inputs.environment }} docker image tag: ${{ inputs.image_tag }}'
         add: '*.yaml'
         cwd: 'aleph-apps'
-        branch: A0-1615-staking-dashboard #! Change to "${{ inputs.environment }}" later
+        branch: main #! Change to "${{ inputs.environment }}" later

@@ -43,6 +43,4 @@ jobs:
         with:
           environment: testnet
           image_tag: ${{ needs.build_and_push.outputs.image_tag }}
-          aws_access_key_id: ${{ secrets.AWS_TESTNET_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_TESTNET_SECRET_ACCESS_KEY }} 
           github_token: ${{ secrets.CI_GH_TOKEN }}
