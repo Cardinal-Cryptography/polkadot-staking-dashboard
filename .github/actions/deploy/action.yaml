@@ -5,7 +5,6 @@ inputs:
   image_tag:
     description: Tag of the docker image to be deployed
     required: true
-    required: true
   aws_access_key_id:
     required: true
   aws_secret_access_key:

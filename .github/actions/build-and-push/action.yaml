@@ -5,7 +5,6 @@ inputs:
     required: true
   aws_mainnet_secret_access_key:
     required: true
-    required: true
   build_envs:
     required: true
   environment:
