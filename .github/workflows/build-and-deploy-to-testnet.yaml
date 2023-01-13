@@ -13,6 +13,8 @@ jobs:
   build_and_push:
     name: Build and push
     runs-on: ubuntu-20.04
+    environment: 
+      name: testnet
     steps:
       - name: GIT | Checkout
         uses: actions/checkout@master
@@ -32,6 +34,8 @@ jobs:
     name: Deploy to testnet
     runs-on: ubuntu-20.04
     needs: [build_and_push]
+    environment: 
+      name: testnet
     steps:
       - name: GIT | Checkout
         uses: actions/checkout@master

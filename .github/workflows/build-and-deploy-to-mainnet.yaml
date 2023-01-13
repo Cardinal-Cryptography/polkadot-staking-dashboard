@@ -7,6 +7,8 @@ jobs:
   build_and_push:
     name: Build and push
     runs-on: ubuntu-20.04
+    environment: 
+      name: mainnet
     steps:
       - name: GIT | Checkout
         uses: actions/checkout@master
@@ -26,6 +28,8 @@ jobs:
     name: Deploy to mainnet
     runs-on: ubuntu-20.04
     needs: [build_and_push]
+    environment: 
+      name: mainnet
     steps:
       - name: GIT | Checkout
         uses: actions/checkout@master
