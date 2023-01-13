@@ -22,7 +22,7 @@ runs:
         repository: Cardinal-Cryptography/aleph-apps
         token: ${{ inputs.github_token }}
         path: "aleph-apps"
-        ref: main
+        ref: ${{ inputs.environment }}
 
     - name: KUSTOMIZE | Init kustomize
       uses: imranismail/setup-kustomize@v1
@@ -47,4 +47,4 @@ runs:
         message: 'Updating staking dashboard ${{ inputs.environment }} docker image tag: ${{ inputs.image_tag }}'
         add: '*.yaml'
         cwd: 'aleph-apps'
-        branch: main #! Change to "${{ inputs.environment }}" later
+        branch: ${{ inputs.environment }}
