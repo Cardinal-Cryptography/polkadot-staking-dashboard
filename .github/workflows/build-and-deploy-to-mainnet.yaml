@@ -3,13 +3,6 @@ name: Build, push and deploy staking dashboard to mainnet
 on:
   workflow_dispatch:
 
-  push:
-    paths-ignore:
-      - '*.md'
-    branches:
-      - master
-      - A0-1615-build-pipeline
-
 jobs:
   build_and_push:
     name: Build and push
