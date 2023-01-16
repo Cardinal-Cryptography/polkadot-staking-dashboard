@@ -53,36 +53,6 @@ export const Nominations = ({
 
   const nominating = nominated?.length ?? false;
 
-  // callback function to stop nominating selected validators
-  const cbStopNominatingSelected = (provider: any) => {
-    const { selected } = provider;
-    const _nominations = [...nominations].filter((n) => {
-      return !selected.map((_s: any) => _s.address).includes(n);
-    });
-    openModalWith(
-      'ChangeNominations',
-      {
-        nominations: _nominations,
-        provider,
-        bondType,
-      },
-      'small'
-    );
-  };
-
-  // callback function for adding nominations
-  const cbAddNominations = ({ setSelectActive }: any) => {
-    setSelectActive(false);
-    openModalWith(
-      'NominateFromFavorites',
-      {
-        nominations,
-        bondType,
-      },
-      'xl'
-    );
-  };
-
   // determine whether buttons are disabled
   const poolDestroying =
     isPool &&

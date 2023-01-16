@@ -12,7 +12,7 @@ export const Notifications = () => {
     <Wrapper>
       <AnimatePresence initial={false}>
         {notifications.length > 0 &&
-          notifications.map((_n: any, i: number) => {
+          notifications.map((_n: any) => {
             const { item } = _n;
 
             return (
