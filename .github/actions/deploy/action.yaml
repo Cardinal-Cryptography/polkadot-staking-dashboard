@@ -17,7 +17,7 @@ runs:
   using: composite
   steps:
     - name: GIT | Checkout aleph-apps repo
-      uses: actions/checkout@master
+      uses: actions/checkout@v3
       with:
         repository: Cardinal-Cryptography/aleph-apps
         token: ${{ inputs.github_token }}
