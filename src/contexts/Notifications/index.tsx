@@ -54,7 +54,7 @@ export const NotificationsProvider = ({
     setStateWithRef(_notifications, setNotifications, notificationsRef);
     setTimeout(() => {
       removeNotification(newIndex);
-    }, 3000);
+    }, 6000);
 
     return newIndex;
   };

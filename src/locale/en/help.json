@@ -71,10 +71,6 @@
           "An estimated annual yield based on the {NETWORK_NAME} reward distribution model."
         ]
       ],
-      "ideal_staked": [
-        "Ideal Staked",
-        ["Irrelevant on Aleph Zero."]
-      ],
       "nomination_status": [
         "Nomination Status",
         [
@@ -138,12 +134,6 @@
           "For nomination pools, the pool owner and pool nominator are in charge of nominating a validator on behalf of all the pool members.",
           "Once nominations have been submitted, bonded funds are automatically distributed to nominees that are active in the current era.",
           "As long as your nominated validator is in the era-committee, your funds will be backing that validator."
-        ]
-      ],
-      "inactive_nominations": [
-        "Inactive Nominations",
-        [
-          "Irrelevant on Aleph Zero."
         ]
       ],
       "nomination_pools": [

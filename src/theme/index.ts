@@ -85,6 +85,16 @@ export const backgroundOverlay: theme.ThemeSet = theme(
   defaultThemes.background.overlay
 );
 
+export const backgroundSuccess: theme.ThemeSet = theme(
+  v,
+  defaultThemes.background.success
+);
+
+export const backgroundError: theme.ThemeSet = theme(
+  v,
+  defaultThemes.background.error
+);
+
 // highlights
 
 export const highlightPrimary: theme.ThemeSet = theme(

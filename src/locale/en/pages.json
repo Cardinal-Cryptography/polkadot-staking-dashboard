@@ -71,7 +71,7 @@
       "update": "Update",
       "controller_account": "Controller Account",
       "bond": "Bond",
-      "back_to_staking": "Back to Staking",
+      "back_to_staking": "Restaking",
       "automatically_bonded": "Payouts are automatically bonded to your existing bonded balance.",
       "to_stash": "To Stash",
       "sent_to_stash": "Payouts will be sent to your stash account as free balance.",

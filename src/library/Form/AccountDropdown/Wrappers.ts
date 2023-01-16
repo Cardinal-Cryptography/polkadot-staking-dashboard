@@ -18,6 +18,7 @@ export const StyledDownshift = styled.div`
 
   .label {
     margin: 0.25rem 0 0.75rem 0;
+    color: ${textSecondary};
   }
   .current {
     flex: 1;

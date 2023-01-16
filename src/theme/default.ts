@@ -39,6 +39,8 @@ export const defaultThemes: { [key: string]: any } = {
       'linear-gradient(180deg, rgba(244,242,242,0.93) 0%, rgba(228,225,225,0.93) 100%)',
       'linear-gradient(180deg, rgba(20,20,20,0.93) 0%, rgba(14,14,14,0.93) 100%)'
     ),
+    success: v('#66d16f', '#66d16f'),
+    error: v('#ff4f4c', '#ff4f4c'),
   },
   highlight: {
     primary: v(

@@ -150,27 +150,7 @@ export const Nominations = ({
                 batchKey={batchKey}
                 title={t('nominate.your_nominations')}
                 format="nomination"
-                selectable={
-                  !isReadOnlyAccount(activeAccount) &&
-                  (!isPool || isPoolNominator() || isPoolOwner())
-                }
-                actions={
-                  isReadOnlyAccount(activeAccount)
-                    ? []
-                    : [
-                        {
-                          title: t('nominate.stop_nominating_selected'),
-                          onClick: cbStopNominatingSelected,
-                          onSelected: true,
-                        },
-                        {
-                          disabled: !favoritesList.length,
-                          title: t('nominate.add_from_favorites'),
-                          onClick: cbAddNominations,
-                          onSelected: false,
-                        },
-                      ]
-                }
+                selectable={false}
                 refetchOnListUpdate
                 allowMoreCols
                 disableThrottle

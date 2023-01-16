@@ -27,7 +27,7 @@ export const U32Opts = { bitLength: 32, isLe: true };
 export const PayeeStatus = [
   {
     key: 'Staked',
-    name: 'Back to Staking',
+    name: 'Restaking',
   },
   {
     key: 'Stash',

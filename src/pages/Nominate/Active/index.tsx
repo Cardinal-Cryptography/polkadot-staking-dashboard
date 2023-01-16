@@ -20,8 +20,6 @@ import {
 import { ControllerNotImported } from './ControllerNotImported';
 import { ManageBond } from './ManageBond';
 import { Nominations } from './Nominations';
-import ActiveNominationsStatBox from './Stats/ActiveNominations';
-import InacctiveNominationsStatBox from './Stats/InactiveNominations';
 import MinimumActiveBondStatBox from './Stats/MinimumActiveBond';
 import { Status } from './Status';
 
@@ -40,8 +38,6 @@ export const Active = () => {
       <PageTitle title={t('nominate.nominate')} />
       <StatBoxList>
         <MinimumActiveBondStatBox />
-        <ActiveNominationsStatBox />
-        <InacctiveNominationsStatBox />
       </StatBoxList>
       <ControllerNotImported />
       <PageRowWrapper className="page-padding" noVerticalSpacer>

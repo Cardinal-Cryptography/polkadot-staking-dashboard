@@ -2,7 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundPrimary, networkColor, textSecondary } from 'theme';
+import {
+  backgroundError,
+  backgroundSuccess,
+  networkColor,
+  textInvert,
+} from 'theme';
 
 export const Wrapper = styled.ul`
   position: fixed;
@@ -15,11 +20,10 @@ export const Wrapper = styled.ul`
   z-index: 10;
 
   li {
-    background: ${backgroundPrimary};
+    background: ${networkColor};
     width: 360px;
     margin: 0.4rem 1.2rem;
     position: relative;
-    border-radius: 10px;
     padding: 1rem 1.5rem;
     display: flex;
     flex-flow: column wrap;
@@ -27,13 +31,21 @@ export const Wrapper = styled.ul`
     cursor: pointer;
     overflow: hidden;
 
+    &.notification--error {
+      background: ${backgroundError};
+    }
+
+    &.notification--success {
+      background: ${backgroundSuccess};
+    }
+
     h3 {
-      color: ${networkColor};
+      color: ${textInvert};
       margin: 0 0 0.5rem;
       flex: 1;
     }
     h5 {
-      color: ${textSecondary};
+      color: ${textInvert};
       margin: 0;
       text-overflow: ellipsis;
       white-space: nowrap;
