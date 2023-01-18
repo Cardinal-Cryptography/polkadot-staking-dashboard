@@ -15,7 +15,7 @@
     },
     "connect_extensions": [
       "Connect Extensions",
-      "Connect your accounts to begin using thestaking dashboard.",
+      "Connect your accounts to begin using the staking dashboard.",
       [
         "Connect your accounts to begin using the staking dashboard.",
         "Accounts are accessed via web extensions, that act as wallets. Your wallet is used to sign transactions that you submit within the dashboard.",

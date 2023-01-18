@@ -59,15 +59,6 @@ export const Inflation = () => {
               </h4>
             </div>
           </div>
-          <div>
-            <div className="inner">
-              <h2>{toFixedIfNecessary(supplyAsPercent, 2)}%</h2>
-              <h4>
-                {t('overview.supply_staked')}{' '}
-                <OpenHelpIcon helpKey="Supply Staked" />
-              </h4>
-            </div>
-          </div>
         </div>
       </section>
     </InflationWrapper>
