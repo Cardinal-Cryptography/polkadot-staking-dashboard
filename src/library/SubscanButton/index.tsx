@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { defaultThemes, networkColors } from 'theme/default';
 import { WrapperProps } from './types';
 

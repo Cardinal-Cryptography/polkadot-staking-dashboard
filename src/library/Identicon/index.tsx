@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { Identicon as IdenticonDefault } from '@polkadot/react-identicon';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { backgroundIdenticon } from 'theme';
 import { IdenticonProps } from './types';
 
