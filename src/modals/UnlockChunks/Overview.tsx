@@ -114,7 +114,13 @@ export const Overview = forwardRef(
                   <h2>
                     {planckBnToUnit(value, units)} {network.unit}
                   </h2>
-                  <h4>{left <= 0 ? 'Unlocked' : `Unlocks after era ${era}`}</h4>
+                  <h4>
+                    {left <= 0
+                      ? 'Unlocked'
+                      : `Unlocks in ${left} era${
+                          left > 1 ? 's' : ''
+                        } (after era ${era})`}
+                  </h4>
                 </section>
                 {isStaking && (
                   <section>
