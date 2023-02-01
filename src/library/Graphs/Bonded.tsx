@@ -108,16 +108,7 @@ export const Bonded = ({
       noMargin
       style={{ border: 'none', boxShadow: 'none' }}
     >
-      <div
-        className="graph"
-        style={{
-          flex: 0,
-          paddingRight: '1rem',
-          height: 160,
-        }}
-      >
-        <Doughnut options={options} data={data} />
-      </div>
+      <Doughnut options={options} data={data} />
     </GraphWrapper>
   );
 };

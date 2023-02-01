@@ -13,7 +13,7 @@ export const Wrapper = styled.div<{ minimised: number }>`
 
   h5 {
     color: ${textSecondary};
-    margin: 1.1rem 0 0.3rem 0;
+    margin: 0; /* Overrides the global h5 style */
     padding: 0 0.5rem;
     opacity: 0.7;
   }

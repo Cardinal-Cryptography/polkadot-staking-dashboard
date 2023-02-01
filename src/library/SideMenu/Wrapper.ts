@@ -26,9 +26,7 @@ export const Wrapper = styled.div<MinimisedProps>`
   flex-flow: column nowrap;
   backdrop-filter: blur(4px);
   width: ${(props) =>
-    props.minimised
-      ? `${SideMenuMinimisedWidth}px`
-      : `${SideMenuMaximisedWidth}px`};
+    props.minimised ? SideMenuMinimisedWidth : SideMenuMaximisedWidth};
 
   @media (max-width: ${SideMenuStickyThreshold}px) {
     background: ${backgroundOverlay};
