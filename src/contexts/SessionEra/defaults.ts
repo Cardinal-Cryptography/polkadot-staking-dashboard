@@ -13,5 +13,6 @@ export const sessionEra: SessionEra = {
 
 export const defaultSessionEraContext: SessionEraContextInterface = {
   getEraTimeLeft: () => 0,
+  eraTimeLeft: 0,
   sessionEra,
 };

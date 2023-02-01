@@ -3,6 +3,7 @@
 
 export interface SessionEraContextInterface {
   getEraTimeLeft: () => number;
+  eraTimeLeft: number;
   sessionEra: SessionEra;
 }
 

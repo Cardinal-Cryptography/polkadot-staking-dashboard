@@ -24,6 +24,7 @@ export interface APIConstants {
   historyDepth: BN;
   maxElectingVoters: number;
   expectedBlockTime: number;
+  expectedEraTime: number;
   existentialDeposit: BN;
   poolsPalletId: U8aLike;
 }

@@ -11,6 +11,7 @@ import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
 import { forwardRef } from 'react';
 import { humanNumber, planckBnToUnit, toFixedIfNecessary } from 'Utils';
 import { NotesWrapper, Separator } from '../Wrappers';
+import UnlockStatus from './UnlockStatus';
 import { ChunkWrapper, ContentWrapper } from './Wrappers';
 
 export const Overview = forwardRef(
@@ -105,7 +106,6 @@ export const Overview = forwardRef(
 
         {unlocking.map((chunk: any, i: number) => {
           const { era, value } = chunk;
-          const left = era - activeEra.index;
 
           return (
             <ChunkWrapper key={`unlock_chunk_${i}`}>
@@ -114,7 +114,10 @@ export const Overview = forwardRef(
                   <h2>
                     {planckBnToUnit(value, units)} {network.unit}
                   </h2>
-                  <h4>{left <= 0 ? 'Unlocked' : `Unlocks after era ${era}`}</h4>
+                  <UnlockStatus
+                    unbondingEra={era}
+                    activeEra={activeEra.index}
+                  />
                 </section>
                 {isStaking && (
                   <section>

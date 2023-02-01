@@ -65,6 +65,7 @@ export const FallbackSessionsPerEra = 6;
 export const FallbackNominatorRewardedPerValidator = 256;
 export const FallbackMaxElectingVoters = 22500;
 export const FallbackExpectedBlockTime = 1000;
+export const FallbackExpectedEraTime = 24 * 60 * 60 * 1000;
 
 /*
  * Misc values

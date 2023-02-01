@@ -9,6 +9,7 @@ import {
   ApiEndpoints,
   FallbackBondingDuration,
   FallbackExpectedBlockTime,
+  FallbackExpectedEraTime,
   FallbackMaxElectingVoters,
   FallbackMaxNominations,
   FallbackNominatorRewardedPerValidator,
@@ -130,6 +131,8 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
 
     const expectedBlockTime = FallbackExpectedBlockTime;
 
+    const expectedEraTime = FallbackExpectedEraTime;
+
     const existentialDeposit = _consts[4]
       ? new BN(_consts[4].toString())
       : new BN(0);
@@ -153,6 +156,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       historyDepth,
       maxElectingVoters,
       expectedBlockTime,
+      expectedEraTime,
       poolsPalletId,
       existentialDeposit,
     });
