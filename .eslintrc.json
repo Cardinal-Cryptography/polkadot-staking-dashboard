@@ -82,5 +82,12 @@
     "import/resolver": {
       "typescript": {}
     }
-  }
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.*"],
+      "plugins": ["jest"],
+      "extends": ["plugin:jest/recommended"]
+    }
+  ]
 }
