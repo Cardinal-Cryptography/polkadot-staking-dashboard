@@ -133,7 +133,6 @@ export const Main = () => {
               style={{
                 maxHeight: '100%',
                 height: '100%',
-                width: network.brand.logo.width,
               }}
             />
           </>

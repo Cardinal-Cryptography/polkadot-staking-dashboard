@@ -115,14 +115,14 @@ button {
 
 .theme-aleph-zero,
 .theme-aleph-zero-testnet {
-  --color-primary-light: #00eac7;
-  --color-primary-dark: #00eac7;
-  --color-secondary-light: #00eac7;
-  --color-secondary-dark: #00eac7;
+  --color-primary-light: #00ccab;
+  --color-primary-dark: #00ccab;
+  --color-secondary-light: #00ccab;
+  --color-secondary-dark: #00ccab;
   --color-transparent-light: rgb(0, 204, 171, 0.05);
   --color-transparent-dark: rgb(0, 204, 171, 0.05);
-  --color-stroke-light: #00eac7;
-  --color-stroke-dark: #00eac7;
+  --color-stroke-light: #00ccab;
+  --color-stroke-dark: #00ccab;
 }
 .theme-aleph-zero,
 .theme-aleph-zero-testnet.theme-light #logotype_brandmark {

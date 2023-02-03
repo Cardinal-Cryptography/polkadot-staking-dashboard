@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import {
   helpButton,
+  modalBackground,
   modalOverlayBackground,
   networkColor,
   textPrimary,
@@ -127,7 +128,7 @@ export const ListWrapper = styled(motion.div)`
 export const DefinitionWrapper = styled(motion.div)`
   width: 100%;
   display: flex;
-  background: ${helpButton};
+  background: ${modalBackground};
   border-radius: 0.1rem;
   margin-bottom: 1.25rem;
   padding: 1.5rem 1.5rem 0 1.5rem;

@@ -22,16 +22,16 @@ if (process.env.REACT_APP_DISABLE_MAINNET !== '1') {
     },
     colors: {
       primary: {
-        light: '#00eac7',
-        dark: '#00eac7',
+        light: '#00ccab',
+        dark: '#00ccab',
       },
       secondary: {
         light: '#00eac7',
         dark: '#00eac7',
       },
       stroke: {
-        light: '#00eac7',
-        dark: '#00eac7',
+        light: '#00ccab',
+        dark: '#00ccab',
       },
       transparent: {
         light: 'rgba(0, 204, 171, .5)',
@@ -73,16 +73,16 @@ NETWORKS.alephzerotestnet = {
   },
   colors: {
     primary: {
-      light: '#00eac7',
-      dark: '#00eac7',
+      light: '#00ccab',
+      dark: '#00ccab',
     },
     secondary: {
       light: '#00eac7',
       dark: '#00eac7',
     },
     stroke: {
-      light: '#00eac7',
-      dark: '#00eac7',
+      light: '#00ccab',
+      dark: '#00ccab',
     },
     transparent: {
       light: 'rgba(0, 204, 171, .5)',
@@ -124,16 +124,16 @@ if (process.env.REACT_APP_ENABLE_CUSTOM_NETWORK === '1') {
     },
     colors: {
       primary: {
-        light: '#00eac7',
-        dark: '#00eac7',
+        light: '#00ccab',
+        dark: '#00ccab',
       },
       secondary: {
         light: '#00eac7',
         dark: '#00eac7',
       },
       stroke: {
-        light: '#00eac7',
-        dark: '#00eac7',
+        light: '#00ccab',
+        dark: '#00ccab',
       },
       transparent: {
         light: 'rgba(0, 204, 171, .5)',
@@ -176,16 +176,16 @@ if (process.env.NODE_ENV === 'development') {
     },
     colors: {
       primary: {
-        light: '#00eac7',
-        dark: '#00eac7',
+        light: '#00ccab',
+        dark: '#00ccab',
       },
       secondary: {
         light: '#00eac7',
         dark: '#00eac7',
       },
       stroke: {
-        light: '#00eac7',
-        dark: '#00eac7',
+        light: '#00ccab',
+        dark: '#00ccab',
       },
       transparent: {
         light: 'rgba(0, 204, 171, .5)',
@@ -225,16 +225,16 @@ if (process.env.NODE_ENV === 'development') {
     },
     colors: {
       primary: {
-        light: '#00eac7',
-        dark: '#00eac7',
+        light: '#00ccab',
+        dark: '#00ccab',
       },
       secondary: {
         light: '#00eac7',
         dark: '#00eac7',
       },
       stroke: {
-        light: '#00eac7',
-        dark: '#00eac7',
+        light: '#00ccab',
+        dark: '#00ccab',
       },
       transparent: {
         light: 'rgba(0, 204, 171, .5)',

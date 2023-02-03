@@ -7,15 +7,29 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { PoolState } from 'contexts/Pools/types';
 import { Warning } from 'library/Form/Warning';
 import { forwardRef } from 'react';
+import { useApi } from '../../contexts/Api';
+import { useTheme } from '../../contexts/Themes';
+import { networkColors } from '../../theme/default';
 import { ContentWrapper } from './Wrappers';
 
 export const Tasks = forwardRef((props: any, ref: any) => {
   const { setSection, setTask } = props;
 
+  const { network } = useApi();
+  const { mode } = useTheme();
+
   const { selectedActivePool, isOwner, isStateToggler } = useActivePools();
   const poolLocked = selectedActivePool?.bondedPool?.state === PoolState.Block;
   const poolDestroying =
     selectedActivePool?.bondedPool?.state === PoolState.Destroy;
+
+  const chevronIconElement = (
+    <FontAwesomeIcon
+      transform="shrink-2"
+      icon={faChevronRight}
+      color={networkColors[`${network.name}-${mode}`]}
+    />
+  );
 
   return (
     <ContentWrapper>
@@ -38,9 +52,7 @@ export const Tasks = forwardRef((props: any, ref: any) => {
               <h3>Rename Pool</h3>
               <p>Update the public name of the pool.</p>
             </div>
-            <div>
-              <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
-            </div>
+            <div>{chevronIconElement}</div>
           </button>
         )}
         {(isOwner() || isStateToggler()) && (
@@ -59,9 +71,7 @@ export const Tasks = forwardRef((props: any, ref: any) => {
                   <h3>Unlock Pool</h3>
                   <p>Allow new members to join the pool.</p>
                 </div>
-                <div>
-                  <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
-                </div>
+                <div>{chevronIconElement}</div>
               </button>
             ) : (
               <button
@@ -77,9 +87,7 @@ export const Tasks = forwardRef((props: any, ref: any) => {
                   <h3>Lock Pool</h3>
                   <p>Stop new members from joining the pool.</p>
                 </div>
-                <div>
-                  <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
-                </div>
+                <div>{chevronIconElement}</div>
               </button>
             )}
             <button
@@ -95,9 +103,7 @@ export const Tasks = forwardRef((props: any, ref: any) => {
                 <h3>Destroy Pool</h3>
                 <p>Change pool to destroying state.</p>
               </div>
-              <div>
-                <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
-              </div>
+              <div>{chevronIconElement}</div>
             </button>
           </>
         )}
