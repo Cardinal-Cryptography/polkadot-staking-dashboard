@@ -123,6 +123,8 @@ button {
   --color-transparent-dark: rgb(0, 204, 171, 0.05);
   --color-stroke-light: #00ccab;
   --color-stroke-dark: #00ccab;
+  --color-button-secondary: #1b2b38;
+  --color-button-secondary-hover: #182733;
 }
 .theme-aleph-zero,
 .theme-aleph-zero-testnet.theme-light #logotype_brandmark {
