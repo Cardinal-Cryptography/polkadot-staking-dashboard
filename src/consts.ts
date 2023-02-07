@@ -40,8 +40,8 @@ export const PayeeStatus = [
 ];
 
 export const InterfaceMaximumWidth = 1550;
-export const SideMenuMaximisedWidth = 185;
-export const SideMenuMinimisedWidth = 75;
+export const SideMenuMaximisedWidth = '16rem';
+export const SideMenuMinimisedWidth = '90px';
 export const SideMenuStickyThreshold = 1175;
 export const SectionFullWidthThreshold = 1050;
 export const ShowAccountsButtonWidthThreshold = 850;

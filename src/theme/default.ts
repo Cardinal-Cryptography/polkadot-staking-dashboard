@@ -79,7 +79,7 @@ export const defaultThemes: { [key: string]: any } = {
     background: v('#fff', '#14202a'),
   },
   overlay: {
-    background: v('rgba(200,200,200,0.45)', 'rgba(30,30,30,0.6)'),
+    background: v('rgba(200,200,200,0.45)', 'rgb(17,27,36, 0.9)'),
   },
   help: {
     button: {

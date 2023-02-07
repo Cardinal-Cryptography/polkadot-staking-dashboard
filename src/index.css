@@ -17,18 +17,18 @@
 
 /* global font size */
 html {
-  font-size: 10px;
+  font-size: 11px;
 }
 
 @media (min-width: 600px) {
   html {
-    font-size: 11.2px;
+    font-size: 12px;
   }
 }
 
 @media (min-width: 1600px) {
   html {
-    font-size: 11.7px;
+    font-size: 13px;
   }
 }
 
@@ -115,14 +115,16 @@ button {
 
 .theme-aleph-zero,
 .theme-aleph-zero-testnet {
-  --color-primary-light: #00eac7;
-  --color-primary-dark: #00eac7;
-  --color-secondary-light: #00eac7;
-  --color-secondary-dark: #00eac7;
+  --color-primary-light: #00ccab;
+  --color-primary-dark: #00ccab;
+  --color-secondary-light: #00ccab;
+  --color-secondary-dark: #00ccab;
   --color-transparent-light: rgb(0, 204, 171, 0.05);
   --color-transparent-dark: rgb(0, 204, 171, 0.05);
-  --color-stroke-light: #00eac7;
-  --color-stroke-dark: #00eac7;
+  --color-stroke-light: #00ccab;
+  --color-stroke-dark: #00ccab;
+  --color-button-secondary: #1b2b38;
+  --color-button-secondary-hover: #182733;
 }
 .theme-aleph-zero,
 .theme-aleph-zero-testnet.theme-light #logotype_brandmark {

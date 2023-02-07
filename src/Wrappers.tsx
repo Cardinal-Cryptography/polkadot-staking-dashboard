@@ -146,19 +146,15 @@ export const SideInterfaceWrapper = styled.div<SideInterfaceWrapperProps>`
   flex: 0;
   overflow: hidden;
   min-width: ${(props) =>
-    props.minimised
-      ? `${SideMenuMinimisedWidth}px`
-      : `${SideMenuMaximisedWidth}px`};
+    props.minimised ? SideMenuMinimisedWidth : SideMenuMaximisedWidth};
   max-width: ${(props) =>
-    props.minimised
-      ? `${SideMenuMinimisedWidth}px`
-      : `${SideMenuMaximisedWidth}px`};
+    props.minimised ? SideMenuMinimisedWidth : SideMenuMaximisedWidth};
   transition: all 0.5s cubic-bezier(0.1, 1, 0.2, 1);
 
   @media (max-width: ${SideMenuStickyThreshold}px) {
     position: fixed;
     top: 0;
-    left: ${(props) => (props.open ? 0 : `-${SideMenuMaximisedWidth}px`)};
+    left: ${(props) => (props.open ? 0 : `-${SideMenuMaximisedWidth}`)};
   }
 `;
 
