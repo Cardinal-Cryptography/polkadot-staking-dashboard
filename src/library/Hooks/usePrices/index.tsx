@@ -52,20 +52,24 @@ export const usePrices = () => {
 
   // initial price subscribe
   useEffect(() => {
-    initiatePriceInterval();
-    return () => {
-      if (priceHandle !== null) {
-        clearInterval(priceHandle);
+    if (services.includes('binance_spot')) {
+      if (priceHandle === null) {
+        initiatePriceInterval();
       }
-    };
+    } else if (priceHandle !== null) {
+      clearInterval(priceHandle);
+    }
   }, []);
 
   // resubscribe on network toggle
   useEffect(() => {
-    if (priceHandle !== null) {
+    if (services.includes('binance_spot')) {
+      if (priceHandle === null) {
+        initiatePriceInterval();
+      }
+    } else if (priceHandle !== null) {
       clearInterval(priceHandle);
     }
-    initiatePriceInterval();
   }, [network]);
 
   // servie toggle
