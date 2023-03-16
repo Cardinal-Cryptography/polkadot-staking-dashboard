@@ -16,14 +16,6 @@ export const Settings = () => {
     <>
       <Title title="Settings" />
       <PaddingWrapper>
-        <h4>Toggle Services</h4>
-        <StatusButton
-          checked={services.includes('subscan')}
-          label="Subscan API"
-          onClick={() => {
-            toggleService('subscan');
-          }}
-        />
         {!DISABLE_FIAT && (
           <StatusButton
             checked={services.includes('binance_spot')}

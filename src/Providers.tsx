@@ -21,7 +21,6 @@ import { PoolMembershipsProvider } from 'contexts/Pools/PoolMemberships';
 import { PoolsConfigProvider } from 'contexts/Pools/PoolsConfig';
 import { SessionEraProvider } from 'contexts/SessionEra';
 import { StakingProvider } from 'contexts/Staking';
-import { SubscanProvider } from 'contexts/Subscan';
 import { useTheme } from 'contexts/Themes';
 import { TooltipProvider } from 'contexts/Tooltip';
 import { TransferOptionsProvider } from 'contexts/TransferOptions';
@@ -79,7 +78,6 @@ export const Providers = withProviders(
   TransferOptionsProvider,
   ValidatorsProvider,
   UIProvider,
-  SubscanProvider,
   MenuProvider,
   TooltipProvider,
   NotificationsProvider,

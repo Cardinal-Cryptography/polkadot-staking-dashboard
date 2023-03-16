@@ -31,7 +31,6 @@
       "balance": "余额",
       "overview": "概述",
       "recent_payouts": "最近收益",
-      "subscan_disabled": "Subscan己断开",
       "not_staking": "无抵押",
       "reserved": "己储备"
     },
@@ -189,7 +188,6 @@
       "slashed": "除名",
       "none": "无",
       "recent_payouts": "最近收益",
-      "subscan_disabled": "Subscan己断开",
       "last_era_payout": "上Era收益",
       "payout_history": "收益记录",
       "not_staking": "无抵押",
