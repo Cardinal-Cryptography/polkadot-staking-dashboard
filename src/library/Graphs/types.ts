@@ -17,12 +17,12 @@ export interface EraPointsProps {
 }
 
 export interface PayoutBarProps {
-  days: number;
+  payouts: [number, number | undefined][];
   height: string;
 }
 
 export interface PayoutLineProps {
-  days: number;
+  payouts: [number, number | undefined][];
   average: number;
   height: string;
   background?: string;

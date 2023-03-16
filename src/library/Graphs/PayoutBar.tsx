@@ -15,23 +15,16 @@ import {
 import { useApi } from 'contexts/Api';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
-import { useSubscan } from 'contexts/Subscan';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
-import { format, fromUnixTime } from 'date-fns';
-import { locales } from 'locale';
 import { Bar } from 'react-chartjs-2';
-import { useTranslation } from 'react-i18next';
 import {
   defaultThemes,
   networkColors,
-  networkColorsSecondary,
   networkColorsTransparent,
 } from 'theme/default';
-import { AnySubscan } from 'types';
 import { humanNumber } from 'Utils';
 import { PayoutBarProps } from './types';
-import { formatRewardsForGraphs } from './Utils';
 
 ChartJS.register(
   CategoryScale,
@@ -44,62 +37,28 @@ ChartJS.register(
   Legend
 );
 
-export const PayoutBar = ({ days, height }: PayoutBarProps) => {
+export const PayoutBar = ({ height, payouts }: PayoutBarProps) => {
   const { mode } = useTheme();
-  const { name, unit, units } = useApi().network;
+  const { name, unit } = useApi().network;
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
-  const { payouts, poolClaims } = useSubscan();
-  const { i18n } = useTranslation();
-
-  // remove slashes from payouts (graph does not support negative values).
-  const payoutsNoSlash = payouts.filter(
-    (p: AnySubscan) => p.event_id !== 'Slashed'
-  );
 
   const notStaking = !isSyncing && inSetup() && !membership;
-  const average = 1;
-
-  const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
-    days,
-    average,
-    units,
-    payoutsNoSlash,
-    poolClaims
-  );
 
   // determine color for payouts
   const colorPayouts = notStaking
     ? networkColorsTransparent[`${name}-${mode}`]
     : networkColors[`${name}-${mode}`];
 
-  // determine color for poolClaims
-  const colorPoolClaims = notStaking
-    ? networkColorsTransparent[`${name}-${mode}`]
-    : networkColorsSecondary[`${name}-${mode}`];
-
   const data = {
-    labels: payoutsByDay.map((item: AnySubscan) => {
-      const dateObj = format(fromUnixTime(item.block_timestamp), 'do MMM', {
-        locale: locales[i18n.resolvedLanguage],
-      });
-      return `${dateObj}`;
-    }),
+    labels: payouts.map(([era]) => era),
     datasets: [
       {
         label: 'Payout',
-        data: payoutsByDay.map((item: AnySubscan) => item.amount),
+        data: payouts.map(([, payout]) => payout),
         borderColor: colorPayouts,
         backgroundColor: colorPayouts,
-        pointRadius: 0,
-        borderRadius: 3,
-      },
-      {
-        label: 'Pool Claim',
-        data: poolClaimsByDay.map((item: AnySubscan) => item.amount),
-        borderColor: colorPoolClaims,
-        backgroundColor: colorPoolClaims,
         pointRadius: 0,
         borderRadius: 3,
       },

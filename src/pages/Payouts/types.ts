@@ -9,5 +9,5 @@ export interface PayoutListProps {
   disableThrottle?: boolean;
   title?: string | null;
   payoutsList?: AnySubscan;
-  payouts?: AnySubscan;
+  payouts: [number, number | undefined][];
 }
