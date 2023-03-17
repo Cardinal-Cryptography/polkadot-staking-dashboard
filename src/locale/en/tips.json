@@ -27,8 +27,7 @@
       "Recommended: Become a Nominator",
       "You have enough {NETWORK_UNIT} to become a nominator.",
       [
-        "You have enough {NETWORK_UNIT} to become a nominator and start earning rewards.",
-        "Nominating directly does however require you to actively check your backed validators."
+        "You have enough {NETWORK_UNIT} to become a nominator and start earning rewards."
       ]
     ],
     "recommended_join_pool": [
