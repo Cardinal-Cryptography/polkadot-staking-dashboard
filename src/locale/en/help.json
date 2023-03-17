@@ -291,8 +291,7 @@
         "Payout History",
         [
           "Historical records of payouts made for being an active nominator.",
-          "Requesting payouts is a manual process, so you may receive payouts for multiple eras in quick succession or in a sporadic fashion. Your payout graphs may therefore have multiple payouts occur on the same day, or have days where there were no payouts.",
-          "This does not mean that you were not nominating or generating rewards in that period - only that the payout for that period was not yet made."
+          "Foundation runs an automated service to trigger payouts to all nominators/validators whenever they are available (however, this does not apply to pools)."
         ]
       ]
     },
