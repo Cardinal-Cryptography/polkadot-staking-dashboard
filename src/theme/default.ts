@@ -108,6 +108,10 @@ export const defaultThemes: { [key: string]: any } = {
       transparent: v('rgba(0,128,0,0.25)', 'rgba(0,128,0,0.25)'),
     },
   },
+  radio: {
+    background: v('#fff', '#0f171f'),
+    border: v('#e6e6e6', '#00eac7'),
+  },
 };
 
 // configure card style

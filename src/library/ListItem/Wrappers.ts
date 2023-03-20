@@ -10,6 +10,8 @@ import {
   borderPrimary,
   modalBackground,
   networkColor,
+  radioBackground,
+  radioBorder,
   shadowColorSecondary,
   textSecondary,
 } from 'theme';
@@ -243,7 +245,7 @@ export const SelectWrapper = styled.button`
 `;
 
 export const SelectSingleWrapper = styled.button`
-  background: ${modalBackground};
+  background: ${radioBackground};
   margin: 0 0.75rem 0 0.25rem;
   overflow: hidden;
   display: flex;
@@ -253,7 +255,7 @@ export const SelectSingleWrapper = styled.button`
   height: 1.1rem;
   padding: 0;
   border-radius: 50%;
-  border: 1px solid ${borderPrimary};
+  border: 1px solid ${radioBorder};
 
   * {
     cursor: pointer;

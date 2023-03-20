@@ -184,6 +184,13 @@ export const modalBackground: theme.ThemeSet = theme(
   defaultThemes.modal.background
 );
 
+export const radioBackground: theme.ThemeSet = theme(
+  v,
+  defaultThemes.radio.background
+);
+
+export const radioBorder: theme.ThemeSet = theme(v, defaultThemes.radio.border);
+
 // overlay
 
 export const overlayBackground: theme.ThemeSet = theme(
