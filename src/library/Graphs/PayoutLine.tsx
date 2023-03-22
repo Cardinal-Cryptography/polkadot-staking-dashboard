@@ -38,11 +38,11 @@ ChartJS.register(
 
 export const PayoutLine = ({
   payouts,
-  average,
+  averageWindowSize,
   height,
   background,
 }: PayoutLineProps) => {
-  const graphablePayouts = payouts.slice(average); // Leave out oldest "average" values for the average window
+  const graphablePayouts = payouts.slice(averageWindowSize); // Leave out oldest "averageWindowSize" number of values for the average window
   const { mode } = useTheme();
   const { name, unit } = useApi().network;
   const { isSyncing } = useUi();
@@ -50,22 +50,18 @@ export const PayoutLine = ({
   const { membership: poolMembership } = usePoolMemberships();
   const averageValues = useMemo(
     () =>
-      payouts.length < average
+      payouts.length < averageWindowSize
         ? []
         : payouts
             .map(([, payout]) => payout)
             .reduce<number[]>((acc, _, i, arr) => {
-              if (i < average - 1) return acc;
+              if (i < averageWindowSize - 1) return acc;
 
-              return [
-                ...acc,
-                round(
-                  arr
-                    .slice(i - average + 1, i + 1)
-                    .reduce((sum, v) => sum + (v || 0), 0),
-                  2
-                ),
-              ];
+              const sum = arr
+                .slice(i - averageWindowSize + 1, i + 1)
+                .reduce((s, v) => s + (v || 0), 0);
+
+              return [...acc, round(sum / averageWindowSize, 2)];
             }, []),
     [payouts]
   );
@@ -150,7 +146,7 @@ export const PayoutLine = ({
   return (
     <>
       <h5 className="secondary">
-        {average > 1 ? `${average} Day Average` : null}
+        {averageWindowSize > 1 ? `${averageWindowSize} Day Average` : null}
       </h5>
       <div
         className="graph_line"

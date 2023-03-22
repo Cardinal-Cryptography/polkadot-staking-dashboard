@@ -42,7 +42,9 @@ export const Payouts = () => {
           {lastRewardValue ?? 0}
           &nbsp;{network.unit}
           &nbsp;
-          <span className="fiat">{lastRewardEra ?? ''}</span>
+          <span className="fiat">
+            {lastRewardEra ? `Era ${lastRewardEra}` : ''}
+          </span>
         </h2>
       </div>
       <div className="inner" ref={ref} style={{ minHeight }}>
@@ -69,7 +71,7 @@ export const Payouts = () => {
           <div style={{ marginTop: '3rem' }}>
             <PayoutLine
               payouts={payouts}
-              average={AVERAGE_WINDOW_SIZE}
+              averageWindowSize={AVERAGE_WINDOW_SIZE}
               height="70px"
             />
           </div>

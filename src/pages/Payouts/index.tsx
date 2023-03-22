@@ -91,7 +91,7 @@ export const Payouts = (props: PageProps) => {
               <PayoutBar payouts={payouts} height="150px" />
               <PayoutLine
                 payouts={payouts}
-                average={AVERAGE_WINDOW_SIZE}
+                averageWindowSize={AVERAGE_WINDOW_SIZE}
                 height="75px"
               />
             </div>
