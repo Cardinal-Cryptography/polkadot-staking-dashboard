@@ -40,7 +40,7 @@ const Context = React.createContext<ContextType>({} as ContextType);
 export default (lastNEras: number) => {
   const { validatorsDataCache, updateValidatorsDataCache } =
     useContext(Context);
-  const { activeAccount: validatorId } = useConnect();
+  const { activeAccount } = useConnect();
   const { api } = useApi();
 
   const {
@@ -110,30 +110,21 @@ export default (lastNEras: number) => {
   }, [api, activeEra, erasMissingInCache, selectedErasDataFromCache]);
 
   const payouts = useMemo(() => {
-    if (!validatorsData || !validatorId) return [];
+    if (!validatorsData || !activeAccount) return [];
 
     return [...new Array(lastNEras)]
       .map((_, i) => activeEra - i - 1)
-      .reduce<[eraIndex: number, payout: number | undefined][]>(
-        (acc, eraIndex) => {
-          const validatorsDataInEra = validatorsData[eraIndex];
-          if (!validatorsDataInEra) return acc;
+      .reduce<[eraIndex: number, payout: number][]>((acc, eraIndex) => {
+        const validatorsDataInEra = validatorsData[eraIndex];
+        if (!validatorsDataInEra) return acc;
 
-          const payoutForEra = calcPayoutForEra(
-            validatorsDataInEra,
-            validatorId
-          );
-          return [
-            [
-              eraIndex,
-              payoutForEra === undefined ? undefined : round(payoutForEra, 2),
-            ] as [number, number | undefined],
-            ...acc,
-          ];
-        },
-        []
-      );
-  }, [validatorsData, validatorId]);
+        const payoutForEra = calcPayoutForEra(
+          validatorsDataInEra,
+          activeAccount
+        );
+        return [[eraIndex, round(payoutForEra, 2)] as [number, number], ...acc];
+      }, []);
+  }, [validatorsData, activeAccount]);
 
   const hasAnyPayouts = Object.values(payouts || {}).some((payout) => payout);
 

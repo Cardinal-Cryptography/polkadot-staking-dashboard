@@ -6,5 +6,5 @@ export interface PayoutListProps {
   pagination?: boolean;
   disableThrottle?: boolean;
   title?: string | null;
-  payouts: [number, number | undefined][];
+  payouts: [number, number][];
 }

@@ -10,12 +10,12 @@ export interface BondedProps {
 }
 
 export interface PayoutBarProps {
-  payouts: [number, number | undefined][];
+  payouts: [number, number][];
   height: string;
 }
 
 export interface PayoutLineProps {
-  payouts: [number, number | undefined][];
+  payouts: [number, number][];
   average: number;
   height: string;
   background?: string;

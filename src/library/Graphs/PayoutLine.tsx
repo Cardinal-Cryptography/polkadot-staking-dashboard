@@ -62,7 +62,7 @@ export const PayoutLine = ({
                 round(
                   arr
                     .slice(i - average + 1, i + 1)
-                    .reduce<number>((sum, v) => sum + (v || 0), 0),
+                    .reduce((sum, v) => sum + (v || 0), 0),
                   2
                 ),
               ];

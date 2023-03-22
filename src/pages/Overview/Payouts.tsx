@@ -32,17 +32,17 @@ export const Payouts = () => {
   const size = useSize(ref.current);
   const { width, height, minHeight } = formatSize(size, 306);
 
-  const lastReward = payouts?.[payouts.length - 1];
+  const [lastRewardEra, lastRewardValue] = payouts?.[payouts.length - 1] || [];
 
   return (
     <>
       <div className="head">
         <h4>{t('overview.recent_payouts')}</h4>
         <h2>
-          {lastReward?.[1] || 0}
+          {lastRewardValue ?? 0}
           &nbsp;{network.unit}
           &nbsp;
-          <span className="fiat">{lastReward?.[0] || ''}</span>
+          <span className="fiat">{lastRewardEra ?? ''}</span>
         </h2>
       </div>
       <div className="inner" ref={ref} style={{ minHeight }}>
