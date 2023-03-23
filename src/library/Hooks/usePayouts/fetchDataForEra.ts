@@ -8,13 +8,20 @@ import { EraData } from './types';
  */
 export default (api: ApiPromise, era: number) =>
   Promise.all([
-    api.query.staking.erasRewardPoints(era).then((rp) =>
+    api.query.staking
+      .erasValidatorReward(era)
+      .then((tRP) => new BN(tRP.toString())),
+    api.query.staking.erasRewardPoints(era).then((rp) => ({
+      // @ts-expect-error TS2339: Contrary to the TS error, "total" does exist
+      total: rp.total.toBn(),
       // @ts-expect-error TS2339: Contrary to the TS error, "individual" does exist
-      [...rp.individual.entries()].map(([rawValidatorId, rawPoints]) => ({
-        validatorId: rawValidatorId.toString(),
-        rewardPoints: rawPoints.toBn(),
-      }))
-    ),
+      perValidator: [...rp.individual.entries()].map(
+        ([rawValidatorId, rawPoints]) => ({
+          validatorId: rawValidatorId.toString(),
+          rewardPoints: rawPoints.toBn(),
+        })
+      ),
+    })),
     api.query.staking.erasStakers.entries(era).then((stakers) =>
       stakers.map(
         ([
@@ -52,47 +59,42 @@ export default (api: ApiPromise, era: number) =>
         })
       )
     ),
-  ]).then(([allRewardPoints, allStakes, allCommissions]) => {
-    const perValidatorData: EraData['perValidator'] = {};
+  ]).then(
+    ([
+      totalEraRewardPoints,
+      allAwardedRewardPoints,
+      allStakes,
+      allCommissions,
+    ]) => {
+      const perValidatorData: EraData['perValidator'] = {};
 
-    allRewardPoints.forEach(({ validatorId, rewardPoints }) => {
-      perValidatorData[validatorId] = {
-        ...perValidatorData[validatorId],
-        rewardPoints,
+      allAwardedRewardPoints.perValidator.forEach(
+        ({ validatorId, rewardPoints }) => {
+          perValidatorData[validatorId] = {
+            ...perValidatorData[validatorId],
+            rewardPoints,
+          };
+        }
+      );
+
+      allStakes.forEach(({ validatorId, ...stakes }) => {
+        perValidatorData[validatorId] = {
+          ...perValidatorData[validatorId],
+          ...stakes,
+        };
+      });
+
+      allCommissions.forEach(({ validatorId, commission }) => {
+        perValidatorData[validatorId] = {
+          ...perValidatorData[validatorId],
+          commission,
+        };
+      });
+
+      return {
+        perValidator: perValidatorData,
+        totalEraRewardPoints,
+        totalAwardedRewardPoints: allAwardedRewardPoints.total,
       };
-    });
-
-    allStakes.forEach(({ validatorId, ...stakes }) => {
-      perValidatorData[validatorId] = {
-        ...perValidatorData[validatorId],
-        ...stakes,
-      };
-    });
-
-    allCommissions.forEach(({ validatorId, commission }) => {
-      perValidatorData[validatorId] = {
-        ...perValidatorData[validatorId],
-        commission,
-      };
-    });
-
-    return {
-      perValidator: perValidatorData,
-      totalStake: Object.values(perValidatorData).reduce(
-        (acc, validatorDataInEra) => {
-          const totalStake = validatorDataInEra?.totalStake;
-
-          return totalStake ? acc.add(totalStake) : acc;
-        },
-        new BN(0)
-      ),
-      totalRewardPoints: Object.values(perValidatorData).reduce(
-        (acc, validatorDataInEra) => {
-          const rewardPoints = validatorDataInEra?.rewardPoints;
-
-          return rewardPoints ? acc.add(rewardPoints) : acc;
-        },
-        new BN(0)
-      ),
-    };
-  });
+    }
+  );

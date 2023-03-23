@@ -16,6 +16,6 @@ export type EraData = {
         }>
       | undefined;
   };
-  totalStake: BN;
-  totalRewardPoints: BN;
+  totalEraRewardPoints: BN;
+  totalAwardedRewardPoints: BN;
 };

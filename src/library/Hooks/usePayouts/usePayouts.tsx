@@ -48,6 +48,7 @@ export default (lastNEras: number) => {
       activeEra: { index: activeEra },
     },
   } = useNetworkMetrics();
+
   const { selectedErasDataFromCache, erasMissingInCache } = useMemo(
     () =>
       [...new Array(Math.min(lastNEras, activeEra || 0))]
@@ -75,9 +76,11 @@ export default (lastNEras: number) => {
         ),
     [activeEra, lastNEras] // Deliberately not putting "validatorsDataCache" in deps since we don't want its change to trigger recalc
   );
+
   const [validatorsData, setValidatorsData] = useState<
     typeof validatorsDataCache | undefined
   >(erasMissingInCache.length ? {} : selectedErasDataFromCache);
+
   const [loading, setLoading] = useState(
     !api || !activeEra || erasMissingInCache.length > 0
   );
