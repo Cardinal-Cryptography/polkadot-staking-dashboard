@@ -88,7 +88,10 @@ export const Payouts = (props: PageProps) => {
                 transition: 'opacity 0.5s',
               }}
             >
-              <PayoutBar payouts={payouts} height="150px" />
+              <PayoutBar
+                payouts={payouts.slice(AVERAGE_WINDOW_SIZE)}
+                height="150px"
+              />
               <PayoutLine
                 payouts={payouts}
                 averageWindowSize={AVERAGE_WINDOW_SIZE}

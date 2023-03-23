@@ -67,7 +67,10 @@ export const Payouts = () => {
             marginTop: '1.5rem',
           }}
         >
-          <PayoutBar payouts={payouts} height="160px" />
+          <PayoutBar
+            payouts={payouts.slice(AVERAGE_WINDOW_SIZE)}
+            height="160px"
+          />
           <div style={{ marginTop: '3rem' }}>
             <PayoutLine
               payouts={payouts}
