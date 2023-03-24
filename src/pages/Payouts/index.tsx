@@ -1,12 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { BN } from 'bn.js';
 import { MaxPayoutDays } from 'consts';
-import { useStaking } from 'contexts/Staking';
-import { useSubscan } from 'contexts/Subscan';
-import { useUi } from 'contexts/UI';
-import { format, fromUnixTime } from 'date-fns';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
 import { formatSize, useSize } from 'library/Graphs/Utils';
@@ -15,30 +10,24 @@ import {
   CardWrapper,
   GraphWrapper,
 } from 'library/Graphs/Wrappers';
+import Spinner from 'library/Headers/Spinner';
+import usePayouts from 'library/Hooks/usePayouts';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
-import { StatusLabel } from 'library/StatusLabel';
-import { SubscanButton } from 'library/SubscanButton';
-import { locales } from 'locale';
-import { useEffect, useRef, useState } from 'react';
+import StatusLabel from 'library/StatusLabel';
+import { useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AnySubscan } from 'types';
+import styled from 'styled-components';
 import { PageRowWrapper } from 'Wrappers';
 import { PageProps } from '../types';
 import { PayoutList } from './PayoutList';
 import LastEraPayoutStatBox from './Stats/LastEraPayout';
 
-export const Payouts = (props: PageProps) => {
-  const { payouts, poolClaims } = useSubscan();
-  const { isSyncing, services } = useUi();
-  const { inSetup } = useStaking();
-  const notStaking = !isSyncing && inSetup();
-  const { i18n, t } = useTranslation();
+const AVERAGE_WINDOW_SIZE = 10;
 
-  const [payoutsList, setPayoutLists] = useState<AnySubscan>();
-  const [fromDate, setFromDate] = useState<string | undefined>();
-  const [toDate, setToDate] = useState<string | undefined>();
+export const Payouts = (props: PageProps) => {
+  const { t } = useTranslation();
 
   const { page } = props;
   const { key } = page;
@@ -47,45 +36,14 @@ export const Payouts = (props: PageProps) => {
   const size = useSize(ref.current);
   const { width, height, minHeight } = formatSize(size, 300);
 
-  useEffect(() => {
-    // take non-zero rewards in most-recent order
-    let pList: AnySubscan = [
-      ...payouts.concat(poolClaims).filter((p: AnySubscan) => p.amount > 0),
-    ].slice(0, MaxPayoutDays);
-
-    // re-order rewards based on block timestamp
-    pList = pList.sort((a: AnySubscan, b: AnySubscan) => {
-      const x = new BN(a.block_timestamp);
-      const y = new BN(b.block_timestamp);
-      return y.sub(x);
-    });
-    setPayoutLists(pList);
-  }, [payouts]);
-
-  useEffect(() => {
-    // calculate the earliest and latest payout dates if they exist.
-    if (payoutsList?.length) {
-      setFromDate(
-        format(
-          fromUnixTime(
-            payoutsList[Math.min(MaxPayoutDays - 2, payoutsList.length - 1)]
-              .block_timestamp
-          ),
-          'do MMM',
-          {
-            locale: locales[i18n.resolvedLanguage],
-          }
-        )
-      );
-
-      // latest payout date
-      setToDate(
-        format(fromUnixTime(payoutsList[0].block_timestamp), 'do MMM', {
-          locale: locales[i18n.resolvedLanguage],
-        })
-      );
-    }
-  }, [payoutsList?.length]);
+  const { loading, payouts, hasAnyPayouts } = usePayouts(
+    MaxPayoutDays + AVERAGE_WINDOW_SIZE
+  );
+  const { fromEra, toEra } = useMemo(
+    // @ts-ignore TS7031: Something's off with build config as, contrary to the error, "era"'s type is easily inferable
+    () => calcErasRange(payouts.map(([era]) => era)),
+    [payouts]
+  );
 
   return (
     <>
@@ -95,17 +53,16 @@ export const Payouts = (props: PageProps) => {
       </StatBoxList>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <GraphWrapper>
-          <SubscanButton />
           <CardHeaderWrapper padded>
             <h4>
               {t('payouts.payout_history', { ns: 'pages' })}
               <OpenHelpIcon helpKey="Payout History" />
             </h4>
             <h2>
-              {payouts.length ? (
+              {fromEra && toEra ? (
                 <>
-                  {fromDate}
-                  {toDate !== fromDate && <>&nbsp;-&nbsp;{toDate}</>}
+                  {fromEra}
+                  {fromEra !== toEra && <>&nbsp;-&nbsp;{toEra}</>}
                 </>
               ) : (
                 t('payouts.none', { ns: 'pages' })
@@ -113,52 +70,70 @@ export const Payouts = (props: PageProps) => {
             </h2>
           </CardHeaderWrapper>
           <div className="inner" ref={ref} style={{ minHeight }}>
-            {!services.includes('subscan') ? (
-              <StatusLabel
-                status="active_service"
-                statusFor="subscan"
-                title={t('payouts.subscan_disabled', { ns: 'pages' })}
-                topOffset="30%"
-              />
-            ) : (
+            {!loading && !hasAnyPayouts && (
               <StatusLabel
                 status="sync_or_setup"
                 title={t('payouts.not_staking', { ns: 'pages' })}
                 topOffset="30%"
               />
             )}
-
+            {loading && <LoadingIndicator />}
             <div
               className="graph"
               style={{
                 height: `${height}px`,
                 width: `${width}px`,
                 position: 'absolute',
-                opacity: notStaking ? 0.75 : 1,
+                opacity: hasAnyPayouts && !loading ? 1 : 0.75,
                 transition: 'opacity 0.5s',
               }}
             >
-              <PayoutBar days={MaxPayoutDays} height="150px" />
-              <PayoutLine days={MaxPayoutDays} average={10} height="75px" />
+              <PayoutBar
+                payouts={payouts.slice(AVERAGE_WINDOW_SIZE)}
+                height="150px"
+              />
+              <PayoutLine
+                payouts={payouts}
+                averageWindowSize={AVERAGE_WINDOW_SIZE}
+                height="75px"
+              />
             </div>
           </div>
         </GraphWrapper>
       </PageRowWrapper>
-      {!payoutsList?.length ? (
-        <></>
-      ) : (
+      {payouts && hasAnyPayouts ? (
         <PageRowWrapper className="page-padding" noVerticalSpacer>
           <CardWrapper>
             <PayoutList
               title={t('payouts.recent_payouts', { ns: 'pages' })}
-              payouts={payoutsList}
+              payouts={payouts}
               pagination
             />
           </CardWrapper>
         </PageRowWrapper>
+      ) : (
+        <></>
       )}
     </>
   );
 };
 
 export default Payouts;
+
+const calcErasRange = (allEras: number[]) =>
+  allEras.reduce(
+    (acc, era) => {
+      if (era < acc.fromEra) return { ...acc, fromEra: era };
+      if (era > acc.toEra) return { ...acc, toEra: era };
+      return acc;
+    },
+    { fromEra: allEras[0], toEra: allEras[0] }
+  );
+
+const LoadingIndicator = styled(Spinner)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  z-index: 2;
+`;

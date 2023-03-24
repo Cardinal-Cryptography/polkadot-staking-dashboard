@@ -14,19 +14,17 @@ import {
 import { useApi } from 'contexts/Api';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
-import { useSubscan } from 'contexts/Subscan';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
+import { useMemo } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
   defaultThemes,
   networkColors,
   networkColorsSecondary,
 } from 'theme/default';
-import { AnySubscan } from 'types';
-import { humanNumber } from 'Utils';
+import { humanNumber, round } from 'Utils';
 import { PayoutLineProps } from './types';
-import { combineRewardsByDay, formatRewardsForGraphs } from './Utils';
 
 ChartJS.register(
   CategoryScale,
@@ -39,36 +37,37 @@ ChartJS.register(
 );
 
 export const PayoutLine = ({
-  days,
-  average,
+  payouts,
+  averageWindowSize,
   height,
   background,
 }: PayoutLineProps) => {
+  const graphablePayouts = payouts.slice(averageWindowSize); // Leave out oldest "averageWindowSize" number of values for the average window
   const { mode } = useTheme();
-  const { name, unit, units } = useApi().network;
+  const { name, unit } = useApi().network;
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
   const { membership: poolMembership } = usePoolMemberships();
-  const { payouts, poolClaims } = useSubscan();
+  const averageValues = useMemo(
+    () =>
+      payouts.length < averageWindowSize
+        ? []
+        : payouts
+            .map(([, payout]) => payout)
+            .reduce<number[]>((acc, _, i, arr) => {
+              if (i < averageWindowSize - 1) return acc;
+
+              const sum = arr
+                .slice(i - averageWindowSize + 1, i + 1)
+                .reduce((s, v) => s + (v || 0), 0);
+
+              return [...acc, round(sum / averageWindowSize, 2)];
+            }, []),
+    [payouts]
+  );
 
   const notStaking = !isSyncing && inSetup() && !poolMembership;
   const poolingOnly = !isSyncing && inSetup() && poolMembership !== null;
-
-  // remove slashes from payouts (graph does not support negative values).
-  const payoutsNoSlash = payouts.filter(
-    (p: AnySubscan) => p.event_id !== 'Slashed'
-  );
-
-  const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
-    days,
-    average,
-    units,
-    payoutsNoSlash,
-    poolClaims
-  );
-
-  // combine payouts and pool claims into one dataset
-  const combinedPayouts = combineRewardsByDay(payoutsByDay, poolClaimsByDay);
 
   // determine color for payouts
   const color = notStaking
@@ -130,11 +129,11 @@ export const PayoutLine = ({
   };
 
   const data = {
-    labels: payoutsByDay.map(() => ''),
+    labels: graphablePayouts.map(([era]) => era),
     datasets: [
       {
         label: 'Payout',
-        data: combinedPayouts.map((item: AnySubscan) => item?.amount ?? 0),
+        data: averageValues,
         borderColor: color,
         backgroundColor: color,
         pointStyle: undefined,
@@ -147,7 +146,7 @@ export const PayoutLine = ({
   return (
     <>
       <h5 className="secondary">
-        {average > 1 ? `${average} Day Average` : null}
+        {averageWindowSize > 1 ? `${averageWindowSize} Day Average` : null}
       </h5>
       <div
         className="graph_line"

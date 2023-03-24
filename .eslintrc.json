@@ -76,7 +76,8 @@
         "singleReturnOnly": false
       }
     ],
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "react/state-in-constructor": ["off"]
   },
   "settings": {
     "import/resolver": {

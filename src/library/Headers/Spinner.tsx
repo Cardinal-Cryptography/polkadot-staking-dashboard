@@ -4,7 +4,7 @@
 import styled from 'styled-components';
 import { backgroundPrimary } from 'theme';
 
-const StyledSpinner = styled.div`
+export default styled.div`
   font-size: 10px;
   margin: 0;
   text-indent: -9999em;
@@ -71,9 +71,3 @@ const StyledSpinner = styled.div`
     }
   }
 `;
-
-export const Spinner = () => {
-  return <StyledSpinner />;
-};
-
-export default Spinner;
