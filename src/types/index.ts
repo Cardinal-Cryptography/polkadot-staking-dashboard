@@ -49,7 +49,6 @@ export interface Network {
       dark: string;
     };
   };
-  subscanEndpoint: string;
   unit: string;
   units: number;
   ss58: number;
@@ -114,8 +113,6 @@ export type AnyJson = any;
 export type AnyFunction = any;
 // eslint-disable-next-line
 export type AnyMetaBatch = any;
-// eslint-disable-next-line
-export type AnySubscan = any;
 
 // track the status of a syncing / fetching process.
 export enum Sync {

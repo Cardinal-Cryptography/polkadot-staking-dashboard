@@ -1,8 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { AnySubscan } from 'types';
-
 export interface BondedProps {
   active: number;
   unlocking: number;
@@ -11,19 +9,14 @@ export interface BondedProps {
   free: number;
 }
 
-export interface EraPointsProps {
-  items: AnySubscan;
-  height: number;
-}
-
 export interface PayoutBarProps {
-  days: number;
+  payouts: [number, number][];
   height: string;
 }
 
 export interface PayoutLineProps {
-  days: number;
-  average: number;
+  payouts: [number, number][];
+  averageWindowSize: number;
   height: string;
   background?: string;
 }

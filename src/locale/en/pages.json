@@ -31,7 +31,6 @@
       "balance": "Balance",
       "overview": "Overview",
       "recent_payouts": "Recent Payouts",
-      "subscan_disabled": "Subscan Disabled",
       "not_staking": "Not Staking",
       "reserved": "Reserved"
     },
@@ -191,7 +190,6 @@
       "slashed": "Slashed",
       "none": "None",
       "recent_payouts": "Recent Payouts",
-      "subscan_disabled": "Subscan Disabled",
       "last_era_payout": "Last Era Payout",
       "payout_history": "Payout History",
       "not_staking": "Not Staking",

@@ -231,3 +231,6 @@ export const stringToKey = (str: string) => {
   if (!str) return '';
   return str.toLowerCase().replace(/ /g, '_');
 };
+
+export const round = (value: number, precision: number) =>
+  Math.round(value * 10 ** precision) / 10 ** precision;
