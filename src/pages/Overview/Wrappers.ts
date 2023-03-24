@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { MediumFontSizeMaxWidth, SmallFontSizeMaxWidth } from 'consts';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import {
   borderPrimary,
   borderSecondary,

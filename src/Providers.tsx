@@ -30,7 +30,7 @@ import { UIProvider } from 'contexts/UI';
 import { ValidatorsProvider } from 'contexts/Validators';
 import { withProviders } from 'library/Hooks';
 import Router from 'Router';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components/macro';
 import { EntryWrapper as Wrapper } from 'Wrappers';
 
 // `polkadot-dashboard-ui` theme classes are inserted here.

@@ -3,7 +3,7 @@
 
 import { SideMenuStickyThreshold } from 'consts';
 import { motion } from 'framer-motion';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { backgroundNetworkBar, networkColor, textSecondary } from 'theme';
 
 export const Wrapper = styled(motion.div)`

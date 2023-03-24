@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { motion } from 'framer-motion';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { helpButton, textPrimary, textSecondary } from 'theme';
 
 export const TipWrapper = styled(motion.div)`

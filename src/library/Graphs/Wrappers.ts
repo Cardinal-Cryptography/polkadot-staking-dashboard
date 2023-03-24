@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { SideMenuStickyThreshold } from 'consts';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import {
   backgroundSecondary,
   borderPrimary,

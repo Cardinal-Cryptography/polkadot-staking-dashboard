@@ -5,7 +5,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCheck, faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SelectSingleWrapper, SelectWrapper } from 'library/ListItem/Wrappers';
-import { useTheme } from 'styled-components';
+import { useTheme } from 'styled-components/macro';
 import { defaultThemes } from 'theme/default';
 import { useList } from '../../List/context';
 import { SelectProps } from '../types';
