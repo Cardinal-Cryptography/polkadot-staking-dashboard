@@ -137,7 +137,7 @@ export const SideMenu = () => {
           type="button"
           onClick={() =>
             window.open(
-              'https://github.com/Cardinal-Cryptography/polkadot-staking-dashboard',
+              'https://github.com/Cardinal-Cryptography/aleph-zero-dashboard',
               '_blank'
             )
           }

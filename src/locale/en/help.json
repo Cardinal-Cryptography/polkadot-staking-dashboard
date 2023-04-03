@@ -12,7 +12,7 @@
       "dashboard_tips": [
         "Dashboard Tips",
         [
-          "Staking dashboard will present you tips to help you along each step of staking on Aleph Zero.",
+          "Dashboard will present you tips to help you along each step of staking on Aleph Zero.",
           "Tips can be turned off or re-enabled from dashboard settings, that can be accessed via the cog icon in the bottom left corner of the side menu."
         ]
       ],
@@ -48,7 +48,7 @@
         "Reserve Balance",
         [
           "In {NETWORK_NAME}, you must have a balance above a certain amount for your account to exist on-chain. This amount is called your 'existential deposit'.",
-          "Staking dashboard ensures that this amount of {NETWORK_UNIT} is never touched."
+          "Dashboard ensures that this amount of {NETWORK_UNIT} is never touched."
         ]
       ],
       "network_stats": [
@@ -167,7 +167,7 @@
           "Your pool membership status reflects whether you are a member of a pool.",
           "Pool memberships can either be that of a pool member or a pool owner.",
           "Currently on {NETWORK_NAME}, accounts can only join one pool at a time. If you wish to join another pool, you must leave your current pool first.",
-          "To leave a pool, you simply need to unbond and withdraw all your bonded {NETWORK_UNIT}. Staking dashboard provides a dedicated Leave button to unbond from a pool."
+          "To leave a pool, you simply need to unbond and withdraw all your bonded {NETWORK_UNIT}. Dashboard provides a dedicated Leave button to unbond from a pool."
         ]
       ],
       "bonded_in_pool": [
@@ -297,7 +297,7 @@
     },
     "externals": {
       "connect_your_accounts": "How to Connect Your Accounts",
-      "how_to_use": "How to Use the Staking Dashboard: Overview",
+      "how_to_use": "How to Use the Dashboard: Overview",
       "stake_dot": "Staking your DOT",
       "change_destination": "Changing Your Reward Destination",
       "bond_more": "Bond More Tokens to Your Existing Stake",

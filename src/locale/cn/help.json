@@ -296,7 +296,7 @@
     },
     "externals": {
       "connect_your_accounts": "如何连接您的帐户",
-      "how_to_use": "如何使用Staking Dashboard:概述",
+      "how_to_use": "如何使用Dashboard:概述",
       "stake_dot": "抵押您的DOT",
       "change_destination": "更改奖励钱包地址",
       "bond_more": "质押更多代币到现有的抵押",

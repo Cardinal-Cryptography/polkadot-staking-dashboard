@@ -15,12 +15,12 @@
     },
     "connect_extensions": [
       "Connect Extensions",
-      "Connect your accounts to begin using the staking dashboard.",
+      "Connect your accounts to begin using the dashboard.",
       [
-        "Connect your accounts to begin using the staking dashboard.",
+        "Connect your accounts to begin using the dashboard.",
         "Accounts are accessed via web extensions, that act as wallets. Your wallet is used to sign transactions that you submit within the dashboard.",
         "Connect your wallets from the Connect button at the top right of the dashboard, and select the account you wish to stake with to continue.",
-        "Staking dashboard supports a range of extensions and wallets."
+        "Dashboard supports a range of extensions and wallets."
       ]
     ],
     "recommended_nominator": [
