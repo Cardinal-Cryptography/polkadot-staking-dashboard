@@ -14,11 +14,7 @@ import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
-import {
-  defaultThemes,
-  networkColors,
-  networkColorsSecondary,
-} from 'theme/default';
+import { defaultThemes } from 'theme/default';
 import {
   humanNumber,
   planckBnToUnit,
@@ -136,18 +132,19 @@ export const BalanceGraph = () => {
     t('overview.in_pool'),
   ];
   const _data = [graphFreeToStake, graphUnlocking, graphStaked, graphInPool];
+
   const _colors = zeroBalance
     ? [
-        defaultThemes.graphs.colors[1][mode],
-        defaultThemes.graphs.inactive2[mode],
-        defaultThemes.graphs.inactive2[mode],
-        defaultThemes.graphs.inactive[mode],
+        defaultThemes.graphs.inactive[0][mode],
+        defaultThemes.graphs.inactive[1][mode],
+        defaultThemes.graphs.inactive[2][mode],
+        defaultThemes.graphs.inactive[3][mode],
       ]
     : [
-        defaultThemes.graphs.colors[1][mode],
-        defaultThemes.graphs.colors[0][mode],
-        networkColors[`${network.name}-${mode}`],
-        networkColorsSecondary[`${network.name}-${mode}`],
+        defaultThemes.graphs.active[0][mode],
+        defaultThemes.graphs.active[1][mode],
+        defaultThemes.graphs.active[2][mode],
+        defaultThemes.graphs.active[3][mode],
       ];
 
   // default to a greyscale 50/50 donut on zero balance
