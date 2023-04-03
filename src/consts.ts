@@ -8,8 +8,8 @@ import { stringToU8a } from '@polkadot/util';
  */
 export const AppVersion = '1.0.1';
 export const UriPrefix = '/';
-export const TitleDefault = 'Aleph Zero Staking Dashboard';
-export const DappName = 'Aleph Zero Staking Dashboard';
+export const TitleDefault = 'Aleph Zero Dashboard';
+export const DappName = 'Aleph Zero Dashboard';
 export const PolkadotUrl = 'https://alephzero.org/staking/';
 export const DefaultNetwork =
   process.env.NODE_ENV === 'production' &&

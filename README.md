@@ -1,4 +1,4 @@
-# Aleph Zero Staking Dashboard
+# Aleph Zero Dashboard
 
 ## Setup for development
 ```create .env file with this content: REACT_APP_DISABLE_FIAT=1
