@@ -5,7 +5,6 @@ import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useUi } from 'contexts/UI';
 import { GraphWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
-import { StatBoxList } from 'library/StatBoxList';
 import { useTranslation } from 'react-i18next';
 import {
   PageRowWrapper,
@@ -19,9 +18,6 @@ import { NetworkStats } from './NetworkSats';
 import Payouts from './Payouts';
 import PayoutsErrorBoundary from './PayoutsErrorBoundary';
 import Reserve from './Reserve';
-import ActiveEraStatBox from './Stats/ActiveEra';
-import { ActiveNominatorsStatBox } from './Stats/ActiveNominators';
-import TotalNominatorsStatBox from './Stats/TotalNominations';
 import { Tips } from './Tips';
 
 export const Overview = () => {
@@ -39,11 +35,6 @@ export const Overview = () => {
           <ActiveAccount />
         </TopBarWrapper>
       </PageRowWrapper>
-      <StatBoxList>
-        <TotalNominatorsStatBox />
-        <ActiveNominatorsStatBox />
-        <ActiveEraStatBox />
-      </StatBoxList>
       {services.includes('tips') && (
         <PageRowWrapper className="page-padding" noVerticalSpacer>
           <Tips />
