@@ -80,14 +80,14 @@ export const Bonded = ({
   };
   const _colors = zeroBalance
     ? [
-        defaultThemes.graphs.inactive[0][mode],
-        defaultThemes.graphs.inactive[1][mode],
-        defaultThemes.graphs.inactive[3][mode],
+        defaultThemes.graphs.inactive.active[mode],
+        defaultThemes.graphs.inactive.unlocking[mode],
+        defaultThemes.graphs.inactive.free[mode],
       ]
     : [
-        defaultThemes.graphs.active[0][mode],
-        defaultThemes.graphs.active[1][mode],
-        defaultThemes.graphs.active[3][mode],
+        defaultThemes.graphs.active.active[mode],
+        defaultThemes.graphs.active.unlocking[mode],
+        defaultThemes.graphs.active.free[mode],
       ];
 
   const data = {

@@ -135,16 +135,16 @@ export const BalanceGraph = () => {
 
   const _colors = zeroBalance
     ? [
-        defaultThemes.graphs.inactive[0][mode],
-        defaultThemes.graphs.inactive[1][mode],
-        defaultThemes.graphs.inactive[2][mode],
-        defaultThemes.graphs.inactive[3][mode],
+        defaultThemes.graphs.inactive.available[mode],
+        defaultThemes.graphs.inactive.unlocking[mode],
+        defaultThemes.graphs.inactive.nominating[mode],
+        defaultThemes.graphs.inactive.inPool[mode],
       ]
     : [
-        defaultThemes.graphs.active[0][mode],
-        defaultThemes.graphs.active[1][mode],
-        defaultThemes.graphs.active[2][mode],
-        defaultThemes.graphs.active[3][mode],
+        defaultThemes.graphs.active.available[mode],
+        defaultThemes.graphs.active.unlocking[mode],
+        defaultThemes.graphs.active.nominating[mode],
+        defaultThemes.graphs.active.inPool[mode],
       ];
 
   // default to a greyscale 50/50 donut on zero balance
