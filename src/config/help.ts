@@ -17,7 +17,18 @@ export const HELP_CONFIG: HelpItems = [
       'Historical Rewards Rate',
       'Supply Staked',
     ],
-    external: [],
+    external: [
+      [
+        'dashboard_basics',
+        'https://docs.alephzero.org/aleph-zero/dashboard/dashboard-basics',
+        'docs.alephzero.org',
+      ],
+      [
+        'how_to_start',
+        'https://docs.alephzero.org/aleph-zero/stake/how-to-start-staking-with-the-aleph-zero-dashboard',
+        'docs.alephzero.org',
+      ],
+    ],
   },
   {
     key: 'nominate',

@@ -307,7 +307,9 @@
       "change_nominations": "Changing Your Nominations",
       "create_pools": "Creating Nomination Pools",
       "claim_rewards": "Claiming Nomination Pool Rewards",
-      "choose_validators": "How do I Know Which Validators to Choose?"
+      "choose_validators": "How do I Know Which Validators to Choose?",
+      "how_to_start": "How to Start Staking with the Aleph Zero Dashboard",
+      "dashboard_basics": "General guide to using Aleph Zero Dashboard"
     }
   }
 }
