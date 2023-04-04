@@ -5,16 +5,16 @@ import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import { Number } from 'library/StatBoxList/Number';
 import { useTranslation } from 'react-i18next';
+import { planckBnToUnit } from 'Utils';
 
 export const MinimumActiveBondStatBox = () => {
   const { network } = useApi();
-  const { eraStakers } = useStaking();
-  const { minActiveBond } = eraStakers;
+  const { staking } = useStaking();
   const { t } = useTranslation('pages');
 
   const params = {
     label: t('nominate.minimum_active_bond'),
-    value: minActiveBond,
+    value: planckBnToUnit(staking.minNominatorBond, network.units),
     unit: network.unit,
     helpKey: 'Bonding',
   };

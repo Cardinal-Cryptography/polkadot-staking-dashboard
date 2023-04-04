@@ -95,7 +95,7 @@ export const StakingProvider = ({
         stakingMetrics.unsub();
       }
     };
-  }, [isReady, metrics.activeEra]);
+  }, [isReady, metrics.activeEra, activeAccount]);
 
   // handle syncing with eraStakers
   useEffect(() => {
@@ -227,7 +227,7 @@ export const StakingProvider = ({
         ]) => {
           setStakingMetrics({
             ...stakingMetrics,
-            payee: Object.keys(_payee.toHuman())[0],
+            payee: activeAccount ? Object.keys(_payee.toHuman())[0] : null,
             lastTotalStake: _lastTotalStake.toBn(),
             validatorCount: _validatorCount.toBn(),
             totalNominators: _totalNominators.toBn(),
