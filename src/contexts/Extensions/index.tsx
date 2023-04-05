@@ -1,13 +1,12 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ExtensionConfig, EXTENSIONS } from 'config/extensions';
+import { EXTENSIONS } from 'config/extensions';
 import {
   Extension,
   ExtensionsContextInterface,
 } from 'contexts/Extensions/types';
 import React, { useEffect, useRef, useState } from 'react';
-import { AnyApi } from 'types';
 import { setStateWithRef } from 'Utils';
 import { defaultExtensionsContext } from './defaults';
 
@@ -52,17 +51,25 @@ export const ExtensionsProvider = ({
   };
 
   const getInstalledExtensions = () => {
-    const { injectedWeb3 }: AnyApi = window;
-    const _exts: Extension[] = [];
-    EXTENSIONS.forEach((e: ExtensionConfig) => {
-      if (injectedWeb3[e.id] !== undefined) {
-        _exts.push({
-          ...e,
-          ...injectedWeb3[e.id],
-        });
-      }
+    if (!('injectedWeb3' in window && window.injectedWeb3)) return [];
+
+    const { injectedWeb3 } = window;
+    if (!isRecord(injectedWeb3)) return [];
+
+    return EXTENSIONS.flatMap((extension) => {
+      const extensionId = extension.id;
+      if (!(extensionId in injectedWeb3)) return [];
+
+      const extensionConfig = injectedWeb3[extensionId];
+      if (!isInjectedExtensionConfig(extensionConfig)) return [];
+
+      return [
+        {
+          ...extension,
+          ...extensionConfig,
+        },
+      ];
     });
-    return _exts;
   };
 
   return (
@@ -80,3 +87,9 @@ export const ExtensionsProvider = ({
     </ExtensionsContext.Provider>
   );
 };
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null;
+
+const isInjectedExtensionConfig = (value: unknown): value is Extension =>
+  isRecord(value) && 'enable' in value && 'version' in value;
