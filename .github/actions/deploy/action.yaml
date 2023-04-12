@@ -32,10 +32,10 @@ runs:
     - name: KUSTOMIZE | Update docker image tag
       shell: bash
       env:
-        DEPLOY_IMAGE: public.ecr.aws/p6e8q1z1/staking-dashboard:${{ inputs.image_tag }}-${{ inputs.environment }}
+        DEPLOY_IMAGE: public.ecr.aws/p6e8q1z1/aleph-zero-dashboard:${{ inputs.image_tag }}-${{ inputs.environment }}
       run: |
-        cd aleph-apps/staking-dashboard/overlays/${{ inputs.environment }}/eu-central-1
-        kustomize edit set image "staking-dashboard-image-placeholder=${{ env.DEPLOY_IMAGE }}"
+        cd aleph-apps/aleph-zero-dashboard/overlays/${{ inputs.environment }}/eu-central-1
+        kustomize edit set image "aleph-zero-dashboard-image-placeholder=${{ env.DEPLOY_IMAGE }}"
     
     - name: GIT | Commit changes to aleph-apps repository
       uses: EndBug/add-and-commit@v5.1.0
@@ -44,7 +44,7 @@ runs:
       with:
         author_name: AlephZero Automation
         author_email: alephzero@10clouds.com
-        message: 'Updating staking dashboard ${{ inputs.environment }} docker image tag: ${{ inputs.image_tag }}'
+        message: 'Updating aleph-zero-dashboard ${{ inputs.environment }} docker image tag: ${{ inputs.image_tag }}'
         add: '*.yaml'
         cwd: 'aleph-apps'
         branch: ${{ inputs.environment }}

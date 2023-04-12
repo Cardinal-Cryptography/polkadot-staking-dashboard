@@ -1,4 +1,4 @@
-name: Staking Dashboard CI
+name: Aleph Zero Dashboard CI
 
 on:
   push:

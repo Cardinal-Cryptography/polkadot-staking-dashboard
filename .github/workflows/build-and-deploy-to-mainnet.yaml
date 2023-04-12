@@ -1,4 +1,4 @@
-name: Build, push and deploy staking dashboard to mainnet
+name: Build, push and deploy Aleph Zero Dashboard to mainnet
 
 on:
   workflow_dispatch:
@@ -34,7 +34,7 @@ jobs:
       - name: GIT | Checkout
         uses: actions/checkout@v3
 
-      - name: MAINNET | Deploy staking dashboard
+      - name: MAINNET | Deploy Aleph Zero Dashboard
         uses: ./.github/actions/deploy
         id: deploy_mainnet
         with:

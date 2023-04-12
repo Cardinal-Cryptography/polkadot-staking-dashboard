@@ -53,7 +53,7 @@ runs:
         builder: ${{ steps.buildx.outputs.name }}
         file: ./docker/Dockerfile
         push: true
-        tags: public.ecr.aws/p6e8q1z1/staking-dashboard:${{ steps.get_branch.outputs.sha_short }}-${{ inputs.environment }}
+        tags: public.ecr.aws/p6e8q1z1/aleph-zero-dashboard:${{ steps.get_branch.outputs.sha_short }}-${{ inputs.environment }}
         build-args: BUILD_ENVS=${{ inputs.build_envs }}
 
     - name: OUTPUTS | Set outputs with docker images
