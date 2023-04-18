@@ -64,54 +64,56 @@ if (process.env.REACT_APP_DISABLE_MAINNET !== '1') {
   };
 }
 
-NETWORKS.alephzerotestnet = {
-  name: 'Aleph Zero Testnet',
-  endpoints: {
-    rpc: 'wss://ws.test.azero.dev',
-    lightClient: null,
-  },
-  colors: {
-    primary: {
-      light: '#00ccab',
-      dark: '#00ccab',
+if (process.env.REACT_APP_DISABLE_TESTNET !== '1') {
+  NETWORKS.alephzerotestnet = {
+    name: 'Aleph Zero Testnet',
+    endpoints: {
+      rpc: 'wss://ws.test.azero.dev',
+      lightClient: null,
     },
-    secondary: {
-      light: '#00eac7',
-      dark: '#00eac7',
+    colors: {
+      primary: {
+        light: '#00ccab',
+        dark: '#00ccab',
+      },
+      secondary: {
+        light: '#00eac7',
+        dark: '#00eac7',
+      },
+      stroke: {
+        light: '#00ccab',
+        dark: '#00ccab',
+      },
+      transparent: {
+        light: 'rgba(0, 204, 171, .5)',
+        dark: 'rgba(0, 204, 171, .5)',
+      },
     },
-    stroke: {
-      light: '#00ccab',
-      dark: '#00ccab',
-    },
-    transparent: {
-      light: 'rgba(0, 204, 171, .5)',
-      dark: 'rgba(0, 204, 171, .5)',
-    },
-  },
-  unit: 'TZERO',
-  units: 12,
-  ss58: 42,
-  brand: {
-    icon: AzeroIconSVG,
-    logo: {
-      svg: AzeroLogoSVG,
-      width: '8.5rem',
-    },
-    inline: {
-      svg: AzeroInlineSVG,
-      size: '1.2rem',
-    },
-  },
-  api: {
     unit: 'TZERO',
-    priceTicker: 'DOTUSDT', // this is for compatibility with binance endpoint, it's pinged for current token value, but we don't display that value
-  },
-  params: {
-    ...DefaultParams,
-    stakeTarget: 0.5,
-    yearlyInflationInTokens: BN_MILLION.mul(new BN(30)).toNumber(),
-  },
-};
+    units: 12,
+    ss58: 42,
+    brand: {
+      icon: AzeroIconSVG,
+      logo: {
+        svg: AzeroLogoSVG,
+        width: '8.5rem',
+      },
+      inline: {
+        svg: AzeroInlineSVG,
+        size: '1.2rem',
+      },
+    },
+    api: {
+      unit: 'TZERO',
+      priceTicker: 'DOTUSDT', // this is for compatibility with binance endpoint, it's pinged for current token value, but we don't display that value
+    },
+    params: {
+      ...DefaultParams,
+      stakeTarget: 0.5,
+      yearlyInflationInTokens: BN_MILLION.mul(new BN(30)).toNumber(),
+    },
+  };
+}
 
 if (process.env.REACT_APP_ENABLE_CUSTOM_NETWORK === '1') {
   NETWORKS.azerocustom = {

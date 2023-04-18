@@ -1,4 +1,4 @@
-name: Build, push and deploy staking dashboard to mainnet
+name: Build, push and deploy Aleph Zero Dashboard to mainnet
 
 on:
   workflow_dispatch:
@@ -18,7 +18,7 @@ jobs:
         id: build_mainnet
         with:
           environment: mainnet
-          build_envs: "REACT_APP_DISABLE_FIAT=1"
+          build_envs: "REACT_APP_DISABLE_FIAT=1 REACT_APP_DISABLE_TESTNET=1"
           aws_mainnet_access_key_id: ${{ secrets.AWS_MAINNET_ACCESS_KEY_ID }}
           aws_mainnet_secret_access_key: ${{ secrets.AWS_MAINNET_SECRET_ACCESS_KEY }}
     outputs:
@@ -34,7 +34,7 @@ jobs:
       - name: GIT | Checkout
         uses: actions/checkout@v3
 
-      - name: MAINNET | Deploy staking dashboard
+      - name: MAINNET | Deploy Aleph Zero Dashboard
         uses: ./.github/actions/deploy
         id: deploy_mainnet
         with:

@@ -1,4 +1,4 @@
-name: Build, push and deploy staking dashboard to testnet
+name: Build, push and deploy Aleph Zero Dashboard to testnet
 
 on:
   workflow_dispatch:
@@ -40,7 +40,7 @@ jobs:
       - name: GIT | Checkout
         uses: actions/checkout@v3
 
-      - name: TESTNET | Deploy staking dashboard
+      - name: TESTNET | Deploy Aleph Zero Dashboard
         uses: ./.github/actions/deploy
         id: deploy_testnet
         with:
