@@ -19,11 +19,16 @@ import {
   APIConstants,
   APIContextInterface,
   ConnectionStatus,
-  NetworkState,
 } from 'contexts/Api/types';
 import React, { useEffect, useState } from 'react';
 import { AnyApi, Network, NetworkName } from 'types';
 import * as defaults from './defaults';
+
+const DEFAULT_NETWORK_NAME =
+  process.env.NODE_ENV === 'production' &&
+  process.env.REACT_APP_DISABLE_MAINNET !== '1'
+    ? NetworkName.AlephZero
+    : NetworkName.AlephZeroTestnet;
 
 export const APIContext = React.createContext<APIContextInterface>(
   defaults.defaultApiContext
@@ -40,18 +45,18 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   // api instance state
   const [api, setApi] = useState<ApiPromise | null>(null);
 
-  // network state
-  const defaultNetworkName =
-    process.env.NODE_ENV === 'production' &&
-    process.env.REACT_APP_DISABLE_MAINNET !== '1'
-      ? NetworkName.AlephZero
-      : NetworkName.AlephZeroTestnet;
-  const _name: NetworkName =
-    (localStorage.getItem('network') as NetworkName) ?? defaultNetworkName;
+  const [network, setNetwork] = useState(() => {
+    // Accessing local storage in a useState initializer function to not repeat this blocking operation with every render
+    const cache = localStorage.getItem('network');
 
-  const [network, setNetwork] = useState<NetworkState>({
-    name: _name,
-    meta: NETWORKS[localStorage.getItem('network') as NetworkName],
+    const cachedNetworkName = isNetworkName(cache)
+      ? cache
+      : DEFAULT_NETWORK_NAME;
+
+    return {
+      name: cachedNetworkName,
+      meta: NETWORKS[cachedNetworkName],
+    };
   });
 
   // constants state
@@ -66,35 +71,13 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     !!localStorage.getItem('isLightClient')
   );
 
-  // initial connection
   useEffect(() => {
-    if (!provider) {
-      const _network: NetworkName = localStorage.getItem(
-        'network'
-      ) as NetworkName;
-      connect(_network, isLightClient);
-    }
-  });
+    connect(network.name, isLightClient);
+  }, []);
 
-  // provider event handlers
-  useEffect(() => {
-    if (provider !== null) {
-      provider.on('connected', () => {
-        setConnectionStatus(ConnectionStatus.Connected);
-      });
-      provider.on('error', () => {
-        setConnectionStatus(ConnectionStatus.Disconnected);
-      });
-      connectedCallback(provider);
-    }
-  }, [provider]);
-
-  // connection callback
-  const connectedCallback = async (_provider: WsProvider | ScProvider) => {
+  const recreateApi = async (_provider: WsProvider | ScProvider) => {
     const _api = new ApiPromise({ provider: _provider });
     await _api.isReady;
-
-    localStorage.setItem('network', String(network.name));
 
     // constants
     const promises = [
@@ -163,8 +146,13 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // connect function sets provider and updates active network.
-  const connect = async (_network: NetworkName, _isLightClient?: boolean) => {
-    const nodeEndpoint: Network = NETWORKS[_network];
+  const connect = async (
+    networkName: NetworkName,
+    _isLightClient?: boolean
+  ) => {
+    setConnectionStatus(ConnectionStatus.Connecting);
+
+    const nodeEndpoint: Network = NETWORKS[networkName];
     const { endpoints } = nodeEndpoint;
 
     let _provider: WsProvider | ScProvider;
@@ -175,26 +163,36 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       _provider = new WsProvider(endpoints.rpc);
     }
     setNetwork({
-      name: _network,
-      meta: NETWORKS[_network],
+      name: networkName,
+      meta: NETWORKS[networkName],
     });
+
     setProvider(_provider);
+
+    _provider.on('connected', () => {
+      setConnectionStatus(ConnectionStatus.Connected);
+    });
+    _provider.on('error', () => {
+      setConnectionStatus(ConnectionStatus.Disconnected);
+    });
+
+    recreateApi(_provider);
   };
 
-  // handle network switching
   const switchNetwork = async (
     _network: NetworkName,
     _isLightClient: boolean
   ) => {
     localStorage.setItem('isLightClient', _isLightClient ? 'true' : '');
+    localStorage.setItem('network', String(_network));
     setIsLightClient(_isLightClient);
-    // disconnect api if not null
+
     if (api) {
       await api.disconnect();
+      setApi(null);
     }
-    setApi(null);
-    setConnectionStatus(ConnectionStatus.Connecting);
-    connect(_network, _isLightClient);
+
+    await connect(_network, _isLightClient);
   };
 
   // handles fetching of DOT price and updates context state.
@@ -230,7 +228,6 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <APIContext.Provider
       value={{
-        connect,
         fetchDotPrice,
         switchNetwork,
         api,
@@ -246,3 +243,6 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     </APIContext.Provider>
   );
 };
+
+const isNetworkName = (value: unknown): value is NetworkName =>
+  Object.values<unknown>(NetworkName).includes(value);

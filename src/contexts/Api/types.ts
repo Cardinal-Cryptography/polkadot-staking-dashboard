@@ -30,7 +30,6 @@ export interface APIConstants {
 }
 
 export interface APIContextInterface {
-  connect: (_network: NetworkName) => Promise<void>;
   fetchDotPrice: () => void;
   switchNetwork: (
     _network: NetworkName,
