@@ -3,7 +3,7 @@
 
 import { ThemesProvider } from 'contexts/Themes';
 import { i18next } from 'locale';
-import { Providers } from 'Providers';
+import Providers from 'Providers';
 import { I18nextProvider } from 'react-i18next';
 
 const App = () => (

@@ -164,6 +164,8 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     } else {
       _provider = new WsProvider(endpoints.rpc);
     }
+    provider?.disconnect(); // Disconnect the previous provider - no need to wait for it, can be done in the background
+
     setNetwork({
       name: networkName,
       meta: NETWORKS[networkName],

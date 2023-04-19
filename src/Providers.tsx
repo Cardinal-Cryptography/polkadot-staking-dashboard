@@ -60,9 +60,8 @@ export const ThemedRouter = () => {
   );
 };
 
-export const Providers = withProviders(
+const AllProviders = withProviders(
   FiltersProvider,
-  APIProvider,
   ExtensionsProvider,
   ConnectProvider,
   HelpProvider,
@@ -89,4 +88,21 @@ export const Providers = withProviders(
   PayoutsCacheProvider
 )(ThemedRouter);
 
-export default Providers;
+const ProvidersWithNetwork = () => {
+  const { network } = useApi();
+
+  return (
+    <AllProviders
+      key={
+        /* We want all states of the app to be completely wiped during network changes. */
+        network.endpoints.rpc
+      }
+    />
+  );
+};
+
+export default () => (
+  <APIProvider>
+    <ProvidersWithNetwork />
+  </APIProvider>
+);
