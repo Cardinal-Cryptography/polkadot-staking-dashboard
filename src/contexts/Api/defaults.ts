@@ -9,6 +9,26 @@ import {
   APIContextInterface,
   ConnectionStatus,
 } from 'contexts/Api/types';
+import { NetworkName } from 'types';
+
+const isNetworkName = (value: unknown): value is NetworkName =>
+  Object.values<unknown>(NetworkName).includes(value);
+
+const defaultNetworkName =
+  process.env.NODE_ENV === 'production' &&
+  process.env.REACT_APP_DISABLE_MAINNET !== '1'
+    ? NetworkName.AlephZero
+    : NetworkName.AlephZeroTestnet;
+
+const cachedNetworkName = localStorage.getItem('network');
+
+if (!isNetworkName(cachedNetworkName)) {
+  localStorage.setItem('network', defaultNetworkName);
+}
+
+export const initialNetworkName = isNetworkName(cachedNetworkName)
+  ? cachedNetworkName
+  : defaultNetworkName;
 
 export const consts: APIConstants = {
   bondDuration: 0,
@@ -34,9 +54,5 @@ export const defaultApiContext: APIContextInterface = {
   isLightClient: false,
   isReady: false,
   status: ConnectionStatus.Disconnected,
-  network:
-    process.env.NODE_ENV === 'production' &&
-    process.env.REACT_APP_DISABLE_MAINNET !== '1'
-      ? NETWORKS.alephzero
-      : NETWORKS.alephzerotestnet,
+  network: NETWORKS[initialNetworkName],
 };
