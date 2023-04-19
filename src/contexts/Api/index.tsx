@@ -38,6 +38,8 @@ export const useApi = () => React.useContext(APIContext);
 
 export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   // provider instance state
+  // "provider"'s usage is added in a pending PR: https://github.com/Cardinal-Cryptography/aleph-zero-dashboard/pull/36
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [provider, setProvider] = useState<WsProvider | ScProvider | null>(
     null
   );
