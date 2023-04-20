@@ -17,20 +17,24 @@ import { NetworkName } from 'types';
  * having less fields defined and being the only safe one to use. This is obviously
  * a wrong types problem, but fixing these types requires a bigger refactor.
  */
-const isNetworkName = (value: unknown): value is NetworkName =>
+const isValidConfiguredNetworkName = (value: unknown): value is NetworkName =>
   Object.keys(NETWORKS).includes(value as string);
 
 const defaultNetworkName =
-  (process.env.NODE_ENV === 'production' && NetworkName.AlephZero) ||
-  NetworkName.AlephZeroTestnet;
+  process.env.NODE_ENV === 'production' &&
+  isValidConfiguredNetworkName(NetworkName.AlephZero)
+    ? NetworkName.AlephZero
+    : NetworkName.AlephZeroTestnet;
 
 const cachedNetworkName = localStorage.getItem('network');
 
-if (!isNetworkName(cachedNetworkName)) {
+if (!isValidConfiguredNetworkName(cachedNetworkName)) {
   localStorage.setItem('network', defaultNetworkName);
 }
 
-export const initialNetworkName = isNetworkName(cachedNetworkName)
+export const initialNetworkName = isValidConfiguredNetworkName(
+  cachedNetworkName
+)
   ? cachedNetworkName
   : defaultNetworkName;
 
