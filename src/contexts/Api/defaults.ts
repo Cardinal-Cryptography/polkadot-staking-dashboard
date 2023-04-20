@@ -11,14 +11,19 @@ import {
 } from 'contexts/Api/types';
 import { NetworkName } from 'types';
 
+/**
+ * Checking values of "NETWORKS" instead of "NetworkName", because they're not
+ * compatible between runtime (the former) and compile time (the latter), the former
+ * having less fields defined and being the only safe one to use. This is obviously
+ * a wrong types problem, but fixing these types requires a bigger refactor.
+ */
 const isNetworkName = (value: unknown): value is NetworkName =>
-  Object.values<unknown>(NetworkName).includes(value);
+  Object.keys(NETWORKS).includes(value as string);
 
 const defaultNetworkName =
-  process.env.NODE_ENV === 'production' &&
-  process.env.REACT_APP_DISABLE_MAINNET !== '1'
-    ? NetworkName.AlephZero
-    : NetworkName.AlephZeroTestnet;
+  (process.env.NODE_ENV === 'production' && NetworkName.AlephZero) ||
+  NetworkName.AlephZeroTestnet ||
+  NetworkName.AlephZeroDevNet;
 
 const cachedNetworkName = localStorage.getItem('network');
 

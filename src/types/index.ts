@@ -14,7 +14,7 @@ export enum NetworkName {
   Kusama = 'kusama',
   Westend = 'westend',
   AlephZeroTestnet = 'alephzerotestnet',
-  AzeroDevNet = 'azerodevnet',
+  AlephZeroDevNet = 'azerodevnet',
 }
 
 export enum Toggle {
