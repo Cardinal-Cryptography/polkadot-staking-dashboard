@@ -28,15 +28,15 @@ const defaultNetworkName =
 
 const cachedNetworkName = localStorage.getItem('network');
 
-if (!isValidConfiguredNetworkName(cachedNetworkName)) {
-  localStorage.setItem('network', defaultNetworkName);
-}
-
 export const initialNetworkName = isValidConfiguredNetworkName(
   cachedNetworkName
 )
   ? cachedNetworkName
   : defaultNetworkName;
+
+if (cachedNetworkName !== initialNetworkName) {
+  localStorage.setItem('network', initialNetworkName);
+}
 
 export const consts: APIConstants = {
   bondDuration: 0,
