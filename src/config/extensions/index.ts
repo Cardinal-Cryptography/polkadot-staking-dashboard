@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { FunctionComponent, SVGProps } from 'react';
+import { ReactComponent as SignerSvg } from '../../img/a0_icon.svg';
 import { ReactComponent as NovaWalletSVG } from './icons/nova_wallet.svg';
 import { ReactComponent as PolkadotJSSVG } from './icons/polkadot_js.svg';
 import { ReactComponent as SubwalletSVG } from './icons/subwallet_icon.svg';
@@ -15,6 +16,11 @@ export interface ExtensionConfig {
   >;
 }
 export const EXTENSIONS: ExtensionConfig[] = [
+  {
+    id: 'aleph-zero-signer',
+    title: 'Aleph Zero Signer',
+    icon: SignerSvg,
+  },
   {
     id: 'polkadot-js',
     title: (window as any)?.walletExtension?.isNovaWallet
