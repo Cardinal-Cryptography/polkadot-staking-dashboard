@@ -45,5 +45,6 @@ jobs:
         id: deploy_testnet
         with:
           environment: testnet
+          kustomize_version: ${{ vars.KUSTOMIZE_VERSION }}
           image_tag: ${{ needs.build_and_push.outputs.image_tag }}
           github_token: ${{ secrets.CI_GH_TOKEN }}
