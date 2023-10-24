@@ -10,6 +10,7 @@ inputs:
   environment:
     type: choice
     options:
+      - devnet
       - testnet
       - mainnet
     required: true

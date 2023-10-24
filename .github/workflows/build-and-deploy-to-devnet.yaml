@@ -1,44 +1,50 @@
-name: Build, push and deploy Aleph Zero Dashboard to testnet
+name: Build, push and deploy Aleph Zero Dashboard to devnet
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - ".github/**"
+      - "*.md"
 
 jobs:
-  build_and_push:
+  build-and-push:
     name: Build and push
     runs-on: ubuntu-20.04
     environment:
-      name: testnet
+      name: devnet
     steps:
       - name: GIT | Checkout
         uses: actions/checkout@v3
 
-      - name: DOCKER | Build and push testnet image
+      - name: Build and push devnet image
         uses: ./.github/actions/build-and-push
-        id: build_testnet
+        id: build-devnet
         with:
-          environment: testnet
-          build_envs: 'VITE_DISABLE_MAINNET=1 VITE_DISABLE_FIAT=1 VITE_DISABLE_DEVNET=1'
+          environment: devnet
+          build_envs: 'VITE_DISABLE_FIAT=1'
           aws_mainnet_access_key_id: ${{ secrets.AWS_MAINNET_ACCESS_KEY_ID }}
           aws_mainnet_secret_access_key: ${{ secrets.AWS_MAINNET_SECRET_ACCESS_KEY }}
     outputs:
-      image_tag: ${{ steps.build_testnet.outputs.image_tag }}
+      image_tag: ${{ steps.build-devnet.outputs.image_tag }}
 
-  deploy_to_testnet:
-    name: Deploy to testnet
+  deploy-to-devnet:
+    name: Deploy to devnet
     runs-on: ubuntu-20.04
-    needs: [build_and_push]
+    needs: [build-and-push]
     environment:
-      name: testnet
+      name: devnet
     steps:
       - name: GIT | Checkout
         uses: actions/checkout@v3
 
-      - name: TESTNET | Deploy Aleph Zero Dashboard
+      - name: Deploy Aleph Zero Dashboard to Devnet
         uses: ./.github/actions/deploy
-        id: deploy_testnet
+        id: deploy-devnet
         with:
-          environment: testnet
+          environment: devnet
           kustomize_version: ${{ vars.KUSTOMIZE_VERSION }}
-          image_tag: ${{ needs.build_and_push.outputs.image_tag }}
+          image_tag: ${{ needs.build-and-push.outputs.image_tag }}
           github_token: ${{ secrets.CI_GH_TOKEN }}

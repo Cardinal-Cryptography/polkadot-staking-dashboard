@@ -189,62 +189,7 @@ if (import.meta.env.VITE_ENABLE_CUSTOM_NETWORK === '1') {
   NetworkList[azeroCustom.name] = azeroCustom;
 }
 
-if (import.meta.env.MODE === 'development') {
-  const azeroLocal = {
-    name: 'Aleph Zero Local',
-    endpoints: {
-      rpc: 'ws://localhost:9944',
-      lightClient: null,
-    },
-    namespace: '',
-    colors: {
-      primary: {
-        light: '#00ccab',
-        dark: '#00ccab',
-      },
-      secondary: {
-        light: '#00eac7',
-        dark: '#00eac7',
-      },
-      stroke: {
-        light: '#00ccab',
-        dark: '#00ccab',
-      },
-      transparent: {
-        light: 'rgba(0, 204, 171, .5)',
-        dark: 'rgba(0, 204, 171, .5)',
-      },
-      pending: {
-        light: 'rgb(0, 204, 171, 0.33)',
-        dark: 'rgb(0, 204, 171, 0.33)',
-      },
-    },
-    unit: 'LZERO',
-    units: 12,
-    ss58: 42,
-    brand: {
-      icon: AzeroIconSVG,
-      token: AzeroIconSVG,
-      logo: {
-        svg: AzeroLogoSVG,
-        width: '8.5rem',
-      },
-      inline: {
-        svg: AzeroInlineSVG,
-        size: '1.2rem',
-      },
-    },
-    api: {
-      unit: 'LZERO',
-      priceTicker: 'DOTUSDT', // this is for compatibility with binance endpoint, it's pinged for current token value, but we don't display that value
-    },
-    params: {
-      ...DefaultParams,
-      stakeTarget: 0.5,
-      yearlyInflationInTokens: BN_MILLION.mul(new BN(30)).toNumber(),
-    },
-    defaultFeeReserve: 0.1,
-  } as const;
+if (import.meta.env.VITE_DISABLE_DEVNET !== '1') {
   const azeroDevnet = {
     name: 'Aleph Zero Devnet',
     endpoints: {
@@ -301,6 +246,65 @@ if (import.meta.env.MODE === 'development') {
     defaultFeeReserve: 0.1,
   } as const;
 
-  NetworkList[azeroLocal.name] = azeroLocal;
   NetworkList[azeroDevnet.name] = azeroDevnet;
+}
+
+if (import.meta.env.MODE === 'development') {
+  const azeroLocal = {
+    name: 'Aleph Zero Local',
+    endpoints: {
+      rpc: 'ws://localhost:9944',
+      lightClient: null,
+    },
+    namespace: '',
+    colors: {
+      primary: {
+        light: '#00ccab',
+        dark: '#00ccab',
+      },
+      secondary: {
+        light: '#00eac7',
+        dark: '#00eac7',
+      },
+      stroke: {
+        light: '#00ccab',
+        dark: '#00ccab',
+      },
+      transparent: {
+        light: 'rgba(0, 204, 171, .5)',
+        dark: 'rgba(0, 204, 171, .5)',
+      },
+      pending: {
+        light: 'rgb(0, 204, 171, 0.33)',
+        dark: 'rgb(0, 204, 171, 0.33)',
+      },
+    },
+    unit: 'LZERO',
+    units: 12,
+    ss58: 42,
+    brand: {
+      icon: AzeroIconSVG,
+      token: AzeroIconSVG,
+      logo: {
+        svg: AzeroLogoSVG,
+        width: '8.5rem',
+      },
+      inline: {
+        svg: AzeroInlineSVG,
+        size: '1.2rem',
+      },
+    },
+    api: {
+      unit: 'LZERO',
+      priceTicker: 'DOTUSDT', // this is for compatibility with binance endpoint, it's pinged for current token value, but we don't display that value
+    },
+    params: {
+      ...DefaultParams,
+      stakeTarget: 0.5,
+      yearlyInflationInTokens: BN_MILLION.mul(new BN(30)).toNumber(),
+    },
+    defaultFeeReserve: 0.1,
+  } as const;
+
+  NetworkList[azeroLocal.name] = azeroLocal;
 }

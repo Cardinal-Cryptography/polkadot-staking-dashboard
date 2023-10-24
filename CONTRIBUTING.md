@@ -17,27 +17,7 @@ Reach out to ross@parity.io for clarification of any content within this documen
 
 ## Environment Variables
 
-Optionally apply the following environment variables in an environment file such as `.env` or with `yarn build` to customize the build of staking dashboard:
-
-```
-# disable all mentioning of fiat values and token prices
-VITE_DISABLE_FIAT=1
-
-# display an organization label in the network bar
-VITE_ORGANISATION="© Parity Technologies"
-
-# provide a privacy policy url in the network bar
-VITE_PRIVACY_URL=https://...
-
-# disable mainnet / testnet network (for e.g. testnet deployment)
-VITE_DISABLE_MAINNET=1
-VITE_DISABLE_TESTNET=1
-
-# add connection to a custom network (for example a feature net, local and devnet are avaliable by default in a development build)
-VITE_ENABLE_CUSTOM_NETWORK=1
-VITE_CUSTOM_WS_ADDRESS=wss://ws.test.azero.dev
-
-```
+Optionally apply the following environment variables in an environment file, see [`.env`](.env) for example. 
 
 ## Config Files
 

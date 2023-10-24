@@ -8,8 +8,8 @@ RUN apk add curl git gnupg ca-certificates
 WORKDIR /apps
 COPY . .
 
-RUN npm install --legacy-peer-deps
-RUN export $BUILD_ENVS && npm run build
+RUN yarn install
+RUN export $BUILD_ENVS && yarn build
 
 # ===========================================================
 FROM nginx:stable-alpine

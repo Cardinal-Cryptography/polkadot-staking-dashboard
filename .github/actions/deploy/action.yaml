@@ -9,6 +9,7 @@ inputs:
   environment:
     type: choice
     options:
+      - devnet
       - testnet
       - mainnet
     required: true
@@ -25,7 +26,7 @@ runs:
         repository: Cardinal-Cryptography/aleph-apps
         token: ${{ inputs.github_token }}
         path: "aleph-apps"
-        ref: ${{ inputs.environment }}
+        ref: ${{ inputs.environment == 'devnet' && 'main' || inputs.environment }}
 
     - name: KUSTOMIZE | Init kustomize
       uses: imranismail/setup-kustomize@v2
@@ -39,7 +40,7 @@ runs:
       run: |
         cd aleph-apps/aleph-zero-dashboard/overlays/${{ inputs.environment }}/eu-central-1
         kustomize edit set image "aleph-zero-dashboard-image-placeholder=${{ env.DEPLOY_IMAGE }}"
-    
+
     - name: GIT | Commit changes to aleph-apps repository
       uses: EndBug/add-and-commit@v5.1.0
       env:
@@ -50,4 +51,4 @@ runs:
         message: 'Updating aleph-zero-dashboard ${{ inputs.environment }} docker image tag: ${{ inputs.image_tag }}'
         add: '*.yaml'
         cwd: 'aleph-apps'
-        branch: ${{ inputs.environment }}
+        branch: ${{ inputs.environment == 'devnet' && 'main' || inputs.environment }}
