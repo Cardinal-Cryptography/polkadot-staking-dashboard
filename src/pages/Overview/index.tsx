@@ -16,6 +16,7 @@ import { NetworkStats } from './NetworkSats';
 import { Payouts } from './Payouts';
 import { StakeStatus } from './StakeStatus';
 import PayoutsErrorBoundary from './PayoutsErrorBoundary';
+import { Warning } from '../../library/Form/Warning';
 
 export const Overview = () => {
   const { t } = useTranslation('pages');
@@ -30,6 +31,11 @@ export const Overview = () => {
           <ActiveAccounts />
         </PageHeading>
       </PageRow>
+      <Warning
+        text={t(
+          'On December 16th, the Mainnet decentralizes as 9 AZF nodes are replaced by community validators in the block finalization committee. If you’re staking with an AZF node, switch to a Community Validator to keep earning rewards!'
+        )}
+      />
       <PageRow>
         <StakeStatus />
       </PageRow>
