@@ -27,6 +27,8 @@ export interface ConnectContextInterface {
   activeProxy: MaybeAccount;
   activeProxyType: string | null;
   accountsInitialised: boolean;
+  selector: 'nightlyConnect' | 'native';
+  setSelector: (val: 'nightlyConnect' | 'native') => void;
 }
 
 export type ImportedAccount =

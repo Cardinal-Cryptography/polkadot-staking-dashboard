@@ -36,6 +36,7 @@ import { UpdatePayee } from '../modals/UpdatePayee';
 import { UpdateReserve } from '../modals/UpdateReserve';
 import { ValidatorMetrics } from '../modals/ValidatorMetrics';
 import { WithdrawPoolMember } from '../modals/WithdrawPoolMember';
+import { ChooseSelector } from 'modals/ChooseSelector';
 
 export const Overlays = () => {
   const { status } = useHelp();
@@ -55,6 +56,7 @@ export const Overlays = () => {
         Connect,
         Accounts,
         GoToFeedback,
+        ChooseSelector,
         JoinPool,
         ImportLedger,
         ImportVault,

@@ -4,6 +4,7 @@
     "aboveGlobalMax": "高于总体最大值",
     "aboveMax": "高于最大值",
     "account": "账户",
+    "chooseSelector": "选择选择器",
     "accountAlreadyImported": "帐户已导入",
     "accounts": "账户",
     "activeRoles": "有活跃角色在 {{count}} 个提名池",

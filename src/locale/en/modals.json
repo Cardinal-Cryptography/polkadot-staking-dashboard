@@ -4,6 +4,7 @@
     "aboveGlobalMax": "Above Global Max",
     "aboveMax": "Above Max",
     "account": "Account",
+    "chooseSelector": "Choose Selector",
     "accountAlreadyImported": "Account Already Imported",
     "accounts": "Accounts",
     "activeRoles_one": "Active Roles in {{count}} Pool",

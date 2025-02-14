@@ -93,6 +93,11 @@ export const ConnectProvider = ({
   );
   const extensionsInitialisedRef = useRef(extensionsInitialised);
 
+  // which selector was used - nightly connect or native selector
+  const [selector, setSelector] = useState<'nightlyConnect' | 'native'>(
+    'native'
+  );
+
   // store whether hardwaree accounts have been initialised.
   const hardwareInitialisedRef = useRef<boolean>(false);
 
@@ -603,6 +608,8 @@ export const ConnectProvider = ({
         activeProxy: activeProxyRef.current?.address ?? null,
         activeProxyType: activeProxyRef.current?.proxyType ?? null,
         accountsInitialised: accountsInitialisedRef.current,
+        selector,
+        setSelector,
       }}
     >
       {children}

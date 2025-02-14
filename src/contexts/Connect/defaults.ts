@@ -25,6 +25,8 @@ export const defaultConnectContext: ConnectContextInterface = {
   activeProxy: null,
   activeProxyType: null,
   accountsInitialised: false,
+  selector: 'native',
+  setSelector: () => {},
 };
 
 export const defaultHandleImportExtension = {
